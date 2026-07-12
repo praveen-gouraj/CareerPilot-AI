@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Datasets{% endblock %}
+{% block page_title %}Dataset Management{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <div class="glass-card">
+        <h5 class="fw-bold mb-3">Upload Dataset</h5>
+        <form method="post" enctype="multipart/form-data" data-loading-form>
+          <div class="mb-3">
+            <label class="form-label">Dataset Type</label>
+            <select name="dataset_type" class="form-select">
+              <option value="career">Career Training Data (CSV)</option>
+              <option value="questions">Interview Questions (JSON)</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">File</label>
+            <input type="file" name="dataset_file" class="form-control" accept=".csv,.json" required>
+          </div>
+          <button class="btn btn-primary-gradient w-100">Upload</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <div class="glass-card">
+        <h5 class="fw-bold mb-3">Current Records</h5>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-value">{{ career_count }}</div><div class="stat-label">Career Predictions</div></div>
+          <div class="stat-card"><div class="stat-value">{{ question_count }}</div><div class="stat-label">Interview Questions</div></div>
+        </div>
+        <div class="mt-4 text-muted small">Upload a fresh CSV to refresh the training data or import new interview questions from JSON.</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Resume Analyzer{% endblock %}
+{% block page_title %}Resume Analyzer{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="row g-4">
+    <div class="col-lg-4">
+      <div class="glass-card">
+        <h4 class="fw-bold mb-3">Upload resume</h4>
+        <form method="post" enctype="multipart/form-data" data-loading-form>
+          <div class="mb-3">
+            <label class="form-label">Target Domain</label>
+            <select name="target_domain" class="form-select">
+              {% for domain in career_domains %}
+              <option value="{{ domain }}" {% if domain == target_domain %}selected{% endif %}>{{ domain }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Resume File</label>
+            <input type="file" name="resume_file" class="form-control" accept=".pdf,.docx,.txt" required>
+          </div>
+          <button class="btn btn-primary-gradient w-100">Analyze Resume</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="glass-card h-100">
+        {% if analysis %}
+        <div class="row g-3 mb-4">
+          <div class="col-md-4"><div class="metric-card"><div class="small text-muted">ATS Score</div><div class="h3 mb-0">{{ analysis.ats_score }}%</div></div></div>
+          <div class="col-md-4"><div class="metric-card"><div class="small text-muted">Keyword Score</div><div class="h3 mb-0">{{ analysis.keyword_score }}%</div></div></div>
+          <div class="col-md-4"><div class="metric-card"><div class="small text-muted">Rating</div><div class="h3 mb-0">{{ analysis.rating }}</div></div></div>
+        </div>
+        <div class="progress mb-4"><div class="progress-bar" style="width: {{ analysis.ats_score }}%"></div></div>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="widget-card h-100">
+              <h6 class="fw-bold">Strengths</h6>
+              <div class="d-flex flex-wrap gap-2">
+                {% for keyword in analysis.strengths %}<span class="badge badge-success-soft">{{ keyword }}</span>{% else %}<span class="text-muted">No strong matches yet.</span>{% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="widget-card h-100">
+              <h6 class="fw-bold">Missing Keywords</h6>
+              <div class="d-flex flex-wrap gap-2">
+                {% for keyword in analysis.missing_keywords %}<span class="badge badge-warning-soft">{{ keyword }}</span>{% else %}<span class="text-muted">Great resume alignment.</span>{% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <h6 class="fw-bold">Suggestions</h6>
+          <ul class="mb-0 ps-3">
+            {% for suggestion in suggestions %}<li class="mb-1">{{ suggestion }}</li>{% endfor %}
+          </ul>
+        </div>
+        <hr class="my-4">
+        <div>
+          <h6 class="fw-bold">Resume Preview</h6>
+          <div class="glass-card" style="max-height: 260px; overflow:auto; white-space: pre-wrap;">{{ extracted_preview or latest_resume.extracted_text if latest_resume else 'No preview available.' }}</div>
+        </div>
+        {% else %}
+        <div class="text-center py-5 text-muted">Upload a resume to generate ATS score, keyword matches, and improvement guidance.</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

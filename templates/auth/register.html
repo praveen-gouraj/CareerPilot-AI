@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block page_title %}Register{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="auth-card row g-0">
+    <div class="col-lg-5 p-5 d-flex flex-column justify-content-center">
+      <span class="badge badge-soft mb-3">Student Registration</span>
+      <h2 class="fw-bold mb-3">Start your placement journey</h2>
+      <p class="text-muted mb-0">Create your profile, enter your academic details, and begin building your AI-guided career plan.</p>
+    </div>
+    <div class="col-lg-7 p-5" style="background: rgba(255,255,255,0.02); border-left: 1px solid var(--border);">
+      <form method="post" data-loading-form>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Full Name</label>
+            <input type="text" name="full_name" class="form-control" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">College</label>
+            <input type="text" name="college" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Course</label>
+            <input type="text" name="course" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Year</label>
+            <input type="text" name="year" class="form-control" placeholder="3rd Year">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Skills (comma separated)</label>
+            <input type="text" name="skills" class="form-control" placeholder="Python, SQL, Communication, Problem Solving">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Bio</label>
+            <textarea name="bio" class="form-control" rows="3"></textarea>
+          </div>
+        </div>
+        <button class="btn btn-primary-gradient w-100 btn-lg mt-4" type="submit">Create Account</button>
+      </form>
+      <div class="text-center mt-3">
+        <span class="text-muted">Already registered?</span> <a href="{{ url_for('auth.login') }}">Login</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

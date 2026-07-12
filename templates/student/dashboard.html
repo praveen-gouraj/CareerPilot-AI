@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard{% endblock %}
+{% block page_title %}Student Dashboard{% endblock %}
+{% block content %}
+<div class="container-fluid px-0">
+  <div class="stats-grid mb-4">
+    <div class="stat-card"><div class="stat-value">{{ metrics.predictions }}</div><div class="stat-label">Career Predictions</div></div>
+    <div class="stat-card"><div class="stat-value">{{ metrics.resumes }}</div><div class="stat-label">Resume Analyses</div></div>
+    <div class="stat-card"><div class="stat-value">{{ metrics.interviews }}</div><div class="stat-label">Interview Attempts</div></div>
+    <div class="stat-card"><div class="stat-value">{{ metrics.analyses }}</div><div class="stat-label">Skill Gap Reports</div></div>
+    <div class="stat-card"><div class="stat-value">{{ metrics.bookmarks }}</div><div class="stat-label">Bookmarks</div></div>
+    <div class="stat-card"><div class="stat-value">{{ metrics.readiness }}%</div><div class="stat-label">Placement Readiness</div></div>
+  </div>
+
+  <div class="row g-4 mb-4">
+    <div class="col-lg-8">
+      <div class="glass-card chart-card h-100">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <h5 class="mb-1">Activity Trends</h5>
+            <div class="text-muted small">Career, resume, and interview progress</div>
+          </div>
+          <a href="{{ url_for('student.analytics') }}" class="btn btn-outline-soft btn-sm">Open Analytics</a>
+        </div>
+        <canvas id="historyChart" height="140"></canvas>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="glass-card h-100">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">Placement Readiness</h5>
+          <span class="badge badge-soft">Live</span>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mb-3">
+          <div class="glow-ring rounded-circle d-grid place-items-center" style="width: 170px; height: 170px; background: conic-gradient(var(--primary) 0 {{ metrics.readiness }}%, rgba(255,255,255,0.08) {{ metrics.readiness }}% 100%);">
+            <div class="rounded-circle d-grid place-items-center" style="width: 128px; height: 128px; background: var(--surface-strong);">
+              <div class="text-center">
+                <div class="fw-bold display-6 mb-0">{{ metrics.readiness }}%</div>
+                <div class="small text-muted">Ready</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="small text-muted">Based on your latest prediction, skill gap, resume, and interview scores.</div>
+        <div class="mt-3 d-grid gap-2">
+          <a href="{{ url_for('student.career_prediction') }}" class="btn btn-primary-gradient">Generate Career Prediction</a>
+          <a href="{{ url_for('student.resume_analyzer') }}" class="btn btn-outline-soft">Analyze Resume</a>
+          <a href="{{ url_for('student.mock_interview') }}" class="btn btn-outline-soft">Practice Interview</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-4">
+      <div class="glass-card h-100">
+        <div class="d-flex justify-content-between mb-3"><h5 class="mb-0">Recent Predictions</h5><span class="badge badge-soft">{{ recent_predictions|length }}</span></div>
+        {% for item in recent_predictions %}
+        <div class="timeline-item">
+          <div class="fw-semibold">{{ item.recommended_domain }}</div>
+          <div class="text-muted small">Confidence {{ item.confidence }}%</div>
+        </div>
+        {% else %}
+        <p class="text-muted">No predictions yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="glass-card h-100">
+        <div class="d-flex justify-content-between mb-3"><h5 class="mb-0">Resume Reviews</h5><span class="badge badge-soft">{{ recent_resumes|length }}</span></div>
+        {% for item in recent_resumes %}
+        <div class="timeline-item">
+          <div class="fw-semibold">{{ item.file_type|upper }} Resume</div>
+          <div class="text-muted small">ATS Score {{ item.ats_score }}%</div>
+        </div>
+        {% else %}
+        <p class="text-muted">No resume analysis yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="glass-card h-100">
+        <div class="d-flex justify-content-between mb-3"><h5 class="mb-0">Latest Skill Gap</h5><span class="badge badge-soft">{{ recent_analysis.current_score if recent_analysis else 0 }}%</span></div>
+        {% if recent_analysis %}
+        <p class="text-muted small mb-2">Target: {{ recent_analysis.target_domain }}</p>
+        <div class="progress mb-3"><div class="progress-bar" style="width: {{ recent_analysis.current_score }}%"></div></div>
+        <div class="small text-muted">Missing: {{ recent_analysis.missing_skills_json }}</div>
+        {% else %}
+        <p class="text-muted">No skill gap analysis yet.</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="glass-card h-100">
+        <div class="d-flex justify-content-between mb-3"><h5 class="mb-0">Recent Activity</h5><span class="badge badge-soft">{{ recent_activities|length }}</span></div>
+        {% for item in recent_activities %}
+        <div class="timeline-item">
+          <div class="fw-semibold">{{ item.title }}</div>
+          <div class="text-muted small">{{ item.detail }}</div>
+        </div>
+        {% else %}
+        <p class="text-muted">Your latest actions will show up here.</p>
+        {% endfor %}
+        <a href="{{ url_for('student.rankings') }}" class="btn btn-outline-soft btn-sm mt-2">View Rankings</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  const history = {{ history_json|safe }};
+  const ctx = document.getElementById('historyChart');
+  if (ctx) {
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: history.predictions.map((_, index) => `P${index + 1}`),
+        datasets: [
+          { label: 'Career', data: history.predictions, borderColor: '#4f8cff', backgroundColor: 'rgba(79,140,255,0.15)', tension: 0.35, fill: true },
+          { label: 'Resume', data: history.resumes, borderColor: '#26d0ce', backgroundColor: 'rgba(38,208,206,0.12)', tension: 0.35, fill: true },
+          { label: 'Interview', data: history.interviews, borderColor: '#8a5cff', backgroundColor: 'rgba(138,92,255,0.12)', tension: 0.35, fill: true }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { labels: { color: getComputedStyle(document.body).getPropertyValue('--text') } } },
+        scales: {
+          x: { ticks: { color: getComputedStyle(document.body).getPropertyValue('--muted') }, grid: { color: 'rgba(255,255,255,0.06)' } },
+          y: { beginAtZero: true, max: 100, ticks: { color: getComputedStyle(document.body).getPropertyValue('--muted') }, grid: { color: 'rgba(255,255,255,0.06)' } }
+        }
+      }
+    });
+  }
+</script>
+{% endblock %}

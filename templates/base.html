@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}AI Career Guidance Platform{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head_extra %}{% endblock %}
+</head>
+<body class="{% if current_user.is_authenticated %}app-shell{% else %}public-shell{% endif %}">
+  {% if current_user.is_authenticated %}
+  <aside class="sidebar d-none d-lg-block">
+    <div class="brand">
+      <div class="brand-mark"><i class="bi bi-graph-up-arrow"></i></div>
+      <div>
+        <div class="brand-title">Career Guidance System</div>
+        <div class="brand-subtitle">AI, KNN, NLP and analytics</div>
+      </div>
+    </div>
+    <div class="nav flex-column nav-pills">
+      <a class="nav-link sidebar-link" href="{{ url_for('student.dashboard') }}"><i class="bi bi-speedometer2"></i>Dashboard</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('student.career_prediction') }}"><i class="bi bi-stars"></i>Career Prediction</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('student.skill_gap') }}"><i class="bi bi-diagram-3"></i>Skill Gap</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('student.resume_analyzer') }}"><i class="bi bi-file-earmark-person"></i>Resume Analyzer</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('student.mock_interview') }}"><i class="bi bi-chat-square-text"></i>Mock Interview</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('student.analytics') }}"><i class="bi bi-bar-chart"></i>Analytics</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('student.rankings') }}"><i class="bi bi-trophy"></i>Rankings</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('student.bookmarks') }}"><i class="bi bi-bookmark-heart"></i>Bookmarks</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('auth.profile') }}"><i class="bi bi-person-circle"></i>Profile Settings</a>
+      {% if current_user.role == 'admin' %}
+      <div class="mt-3 mb-2 small text-uppercase text-muted">Admin</div>
+      <a class="nav-link sidebar-link" href="{{ url_for('admin.dashboard') }}"><i class="bi bi-shield-lock"></i>Admin Dashboard</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('admin.users') }}"><i class="bi bi-people"></i>Manage Users</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('admin.questions') }}"><i class="bi bi-patch-question"></i>Interview Questions</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('admin.domains') }}"><i class="bi bi-journal-bookmark"></i>Career Domains</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('admin.datasets') }}"><i class="bi bi-database"></i>Datasets</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('admin.reports') }}"><i class="bi bi-clipboard-data"></i>Reports</a>
+      {% endif %}
+      <a class="nav-link sidebar-link" href="{{ url_for('main.about') }}"><i class="bi bi-info-circle"></i>About Project</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('main.contact') }}"><i class="bi bi-envelope"></i>Contact</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('auth.logout') }}"><i class="bi bi-box-arrow-right"></i>Logout</a>
+    </div>
+  </aside>
+  {% endif %}
+
+  <main class="main-content">
+    <div class="topbar mb-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
+      <div>
+        <div class="small text-uppercase text-muted">AI-Based Career Guidance and Placement System</div>
+        <h5 class="mb-0">{% block page_title %}Dashboard{% endblock %}</h5>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-outline-soft btn-sm" type="button" data-theme-toggle><i class="bi bi-brightness-high"></i></button>
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('auth.profile') }}" class="btn btn-outline-soft btn-sm">{{ current_user.full_name }}</a>
+        {% else %}
+        <a href="{{ url_for('auth.login') }}" class="btn btn-outline-soft btn-sm">Login</a>
+        <a href="{{ url_for('auth.register') }}" class="btn btn-primary-gradient btn-sm">Register</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+          <div class="toast align-items-center text-bg-{{ 'danger' if category == 'danger' else category }} border-0 mb-2" role="alert">
+            <div class="d-flex">
+              <div class="toast-body">{{ message }}</div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+          </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <div id="loadingOverlay" class="d-none position-fixed top-0 start-0 w-100 h-100" style="background: rgba(3, 8, 18, 0.52); z-index: 2000;">
+    <div class="d-flex align-items-center justify-content-center h-100">
+      <div class="glass-card text-center px-4 py-3">
+        <div class="spinner-border text-info mb-3" role="status"></div>
+        <div>Processing your request...</div>
+      </div>
+    </div>
+  </div>
+
+  {% if current_user.is_authenticated %}
+  <div id="assistantWidget" class="fade-up">
+    <div class="assistant-bubble glass-card">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <strong class="small">Career Assistant</strong>
+        <span class="badge badge-soft">AI</span>
+      </div>
+      <div id="assistantMessages" class="small mb-3" style="max-height: 160px; overflow-y: auto;">
+        <div class="mb-2"><span class="badge rounded-pill text-bg-dark">Ask me about career prediction, resume analysis, skill gap, or interviews.</span></div>
+      </div>
+      <form id="assistantForm" class="d-flex gap-2">
+        <input type="text" name="message" class="form-control form-control-sm" placeholder="Ask the assistant...">
+        <button class="btn btn-primary-gradient btn-sm" type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+  {% endif %}
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

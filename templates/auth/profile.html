@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Profile Settings{% endblock %}
+{% block page_title %}Profile Settings{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="row g-4 align-items-start">
+    <div class="col-lg-4">
+      <div class="glass-card text-center">
+        <img src="{{ url_for('static', filename='uploads/' ~ current_user.photo) }}" class="avatar-lg mb-3" alt="Profile photo">
+        <h4 class="fw-bold">{{ current_user.full_name }}</h4>
+        <p class="text-muted mb-0">{{ current_user.email }}</p>
+        <div class="mt-3"><span class="badge badge-soft text-capitalize">{{ current_user.role }}</span></div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="glass-card">
+        <form method="post" enctype="multipart/form-data" data-loading-form>
+          <div class="row g-3">
+            <div class="col-md-6"><label class="form-label">Full Name</label><input class="form-control" name="full_name" value="{{ current_user.full_name }}"></div>
+            <div class="col-md-6"><label class="form-label">College</label><input class="form-control" name="college" value="{{ current_user.college or '' }}"></div>
+            <div class="col-md-6"><label class="form-label">Course</label><input class="form-control" name="course" value="{{ current_user.course or '' }}"></div>
+            <div class="col-md-6"><label class="form-label">Year</label><input class="form-control" name="year" value="{{ current_user.year or '' }}"></div>
+            <div class="col-12"><label class="form-label">Skills</label><input class="form-control" name="skills" value="{{ profile_skills }}"></div>
+            <div class="col-12"><label class="form-label">Bio</label><textarea class="form-control" name="bio" rows="4">{{ current_user.bio or '' }}</textarea></div>
+            <div class="col-12"><label class="form-label">New Password</label><input type="password" class="form-control" name="password" placeholder="Leave blank to keep current password"></div>
+            <div class="col-12"><label class="form-label">Profile Picture</label><input type="file" class="form-control" name="photo" accept="image/*"></div>
+          </div>
+          <button class="btn btn-primary-gradient mt-4">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

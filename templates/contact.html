@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Contact{% endblock %}
+{% block page_title %}Contact{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <div class="glass-card h-100">
+        <span class="badge badge-soft mb-3">Contact Information</span>
+        <h3 class="fw-bold mb-3">Need support or want a demo?</h3>
+        <p class="text-muted">Use the form to send a message or reach the placement platform team directly.</p>
+        <div class="timeline-item"><strong>Email</strong><div class="text-muted">support@careerplatform.com</div></div>
+        <div class="timeline-item"><strong>Phone</strong><div class="text-muted">+91 90000 00000</div></div>
+        <div class="timeline-item"><strong>Location</strong><div class="text-muted">Career Tech Lab, India</div></div>
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <div class="glass-card">
+        <h4 class="fw-bold mb-3">Send a message</h4>
+        <form method="post" data-loading-form>
+          <div class="row g-3">
+            <div class="col-md-6"><input class="form-control" name="name" placeholder="Your Name"></div>
+            <div class="col-md-6"><input class="form-control" name="email" placeholder="Your Email"></div>
+            <div class="col-12"><input class="form-control" name="subject" placeholder="Subject"></div>
+            <div class="col-12"><textarea class="form-control" name="message" rows="6" placeholder="Message"></textarea></div>
+          </div>
+          <button class="btn btn-primary-gradient mt-4">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+[
+  {
+    "category": "technical",
+    "question": "Explain the difference between a stack and a queue.",
+    "answer_keywords": ["stack", "queue", "lifo", "fifo"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is normalization in a database and why is it important?",
+    "answer_keywords": ["normalization", "redundancy", "database", "design"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "hr",
+    "question": "Tell me about a time you solved a difficult problem.",
+    "answer_keywords": ["problem", "solution", "team", "result"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "hr",
+    "question": "Why should we hire you?",
+    "answer_keywords": ["skills", "value", "team", "learn"],
+    "difficulty": "easy"
+  }
+]

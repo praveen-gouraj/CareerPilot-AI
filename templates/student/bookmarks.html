@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Bookmarks{% endblock %}
+{% block page_title %}Career Bookmarks{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="glass-card">
+    <h4 class="fw-bold mb-3">Saved Career Domains</h4>
+    <div class="card-grid">
+      {% for bookmark in bookmarks %}
+      <div class="feature-card">
+        <span class="badge badge-soft mb-2">Saved</span>
+        <h5>{{ bookmark.domain_name }}</h5>
+        <div class="text-muted small mb-3">{{ bookmark.note or 'No note added.' }}</div>
+        <div class="small text-muted">{{ bookmark.created_at.strftime('%d %b %Y') }}</div>
+      </div>
+      {% else %}
+      <p class="text-muted">No bookmarked careers yet. Use the career prediction page to save one.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

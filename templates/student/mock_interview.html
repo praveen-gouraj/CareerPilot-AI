@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Mock Interview{% endblock %}
+{% block page_title %}Mock Interview{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <div class="glass-card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="fw-bold mb-0">Practice Session</h4>
+          <span class="badge badge-soft text-capitalize">{{ category }}</span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Category</label>
+          <form method="get">
+            <select name="category" class="form-select" onchange="this.form.submit()">
+              <option value="technical" {% if category == 'technical' %}selected{% endif %}>Technical</option>
+              <option value="hr" {% if category == 'hr' %}selected{% endif %}>HR</option>
+            </select>
+          </form>
+        </div>
+        <div class="metric-card mb-3 text-center">
+          <div class="small text-muted">Timer</div>
+          <div class="h2 mb-0" id="countdown">05:00</div>
+        </div>
+        {% if question %}
+        <div class="feature-card mb-3">
+          <div class="small text-muted mb-2">Random Question</div>
+          <h5 class="mb-0">{{ question.question }}</h5>
+        </div>
+        <form method="post" data-loading-form>
+          <input type="hidden" name="question_id" value="{{ question.id }}">
+          <input type="hidden" name="category" value="{{ category }}">
+          <div class="mb-3">
+            <label class="form-label">Your Answer</label>
+            <textarea class="form-control" name="response_text" id="response_text" rows="8" placeholder="Type your response..." required></textarea>
+          </div>
+          <button class="btn btn-primary-gradient w-100">Submit Answer</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <div class="glass-card h-100">
+        {% if result %}
+        <div class="row g-3 mb-4">
+          <div class="col-md-4"><div class="metric-card"><div class="small text-muted">Score</div><div class="h3 mb-0">{{ result.score }}%</div></div></div>
+          <div class="col-md-4"><div class="metric-card"><div class="small text-muted">Coverage</div><div class="h3 mb-0">{{ result.coverage }}%</div></div></div>
+          <div class="col-md-4"><div class="metric-card"><div class="small text-muted">Feedback</div><div class="h6 mb-0">{{ result.feedback }}</div></div></div>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="widget-card h-100">
+              <h6 class="fw-bold">Matched Keywords</h6>
+              <div class="d-flex flex-wrap gap-2">{% for keyword in result.matched_keywords %}<span class="badge badge-success-soft">{{ keyword }}</span>{% else %}<span class="text-muted">No strong keyword matches.</span>{% endfor %}</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="widget-card h-100">
+              <h6 class="fw-bold">Weak Topics</h6>
+              <div class="d-flex flex-wrap gap-2">{% for keyword in result.weak_topics %}<span class="badge badge-warning-soft">{{ keyword }}</span>{% else %}<span class="text-muted">Well covered response.</span>{% endfor %}</div>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div class="text-center py-5 text-muted">Answer the question to get accuracy, keyword coverage, and feedback.</div>
+        {% endif %}
+        {% if latest_interview %}
+        <hr class="my-4">
+        <div class="d-flex justify-content-between">
+          <div><strong>Latest Score</strong><div class="text-muted">{{ latest_interview.score }}%</div></div>
+          <div><strong>Accuracy</strong><div class="text-muted">{{ latest_interview.accuracy }}%</div></div>
+          <div><a href="{{ url_for('student.analytics') }}" class="btn btn-outline-soft btn-sm">View Analytics</a></div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  let remaining = 300;
+  const timerElement = document.getElementById('countdown');
+  const timerId = setInterval(() => {
+    const minutes = String(Math.floor(remaining / 60)).padStart(2, '0');
+    const seconds = String(remaining % 60).padStart(2, '0');
+    timerElement.textContent = `${minutes}:${seconds}`;
+    if (remaining <= 0) {
+      clearInterval(timerId);
+      const answerBox = document.getElementById('response_text');
+      if (answerBox) answerBox.placeholder = 'Time is up. Review and submit your answer.';
+    }
+    remaining -= 1;
+  }, 1000);
+</script>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Manage Users{% endblock %}
+{% block page_title %}Manage Users{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="glass-card mb-4">
+    <form class="row g-2 align-items-center" method="get">
+      <div class="col-md-9"><input class="form-control" name="search" placeholder="Search by name or email" value="{{ search }}"></div>
+      <div class="col-md-3 d-grid"><button class="btn btn-primary-gradient">Search</button></div>
+    </form>
+  </div>
+  <div class="glass-card">
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Active</th><th>Action</th></tr></thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ user.full_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>{% if user.is_active %}<span class="badge badge-success-soft">Active</span>{% else %}<span class="badge badge-danger-soft">Inactive</span>{% endif %}</td>
+            <td>
+              <form method="post" class="d-flex gap-2 align-items-center">
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <select name="role" class="form-select form-select-sm">
+                  <option value="student" {% if user.role == 'student' %}selected{% endif %}>Student</option>
+                  <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+                </select>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" name="is_active" {% if user.is_active %}checked{% endif %}>
+                </div>
+                <button class="btn btn-outline-soft btn-sm">Save</button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="5" class="text-muted">No matching users.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

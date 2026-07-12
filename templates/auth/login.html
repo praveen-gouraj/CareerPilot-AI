@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block page_title %}Login{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="auth-card row g-0">
+    <div class="col-lg-6 p-5 d-flex flex-column justify-content-center">
+      <span class="badge badge-soft mb-3">Welcome Back</span>
+      <h2 class="fw-bold mb-3">Access your career dashboard</h2>
+      <p class="text-muted mb-0">Sign in to continue career prediction, resume analysis, mock interviews, and analytics tracking.</p>
+    </div>
+    <div class="col-lg-6 p-5" style="background: rgba(255,255,255,0.02); border-left: 1px solid var(--border);">
+      <form method="post" data-loading-form>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" name="email" class="form-control form-control-lg" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" name="password" class="form-control form-control-lg" required>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="remember"> Remember me</label>
+          <a href="{{ url_for('main.contact') }}" class="small text-decoration-none text-info">Need help?</a>
+        </div>
+        <button class="btn btn-primary-gradient w-100 btn-lg" type="submit">Login</button>
+      </form>
+      <div class="text-center mt-3">
+        <span class="text-muted">Don't have an account?</span> <a href="{{ url_for('auth.register') }}">Register</a>
+      </div>
+      <div class="small text-muted mt-4">Admin demo account: admin@careerplatform.com / Admin@123</div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Analytics Dashboard{% endblock %}
+{% block page_title %}Analytics Dashboard{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="row g-4 mb-4">
+    <div class="col-lg-4"><div class="glass-card h-100"><div class="small text-muted">Placement Readiness</div><div class="display-5 fw-bold">{{ readiness }}%</div><div class="progress mt-3"><div class="progress-bar" style="width: {{ readiness }}%"></div></div></div></div>
+    <div class="col-lg-8"><div class="glass-card h-100"><h5 class="fw-bold mb-3">Latest Insights</h5><div class="row g-3"><div class="col-md-4"><div class="metric-card h-100"><div class="small text-muted">Career</div><div class="h6 mb-0">{{ latest_prediction.recommended_domain if latest_prediction else 'N/A' }}</div></div></div><div class="col-md-4"><div class="metric-card h-100"><div class="small text-muted">Resume</div><div class="h6 mb-0">{{ latest_resume.ats_score if latest_resume else 0 }}%</div></div></div><div class="col-md-4"><div class="metric-card h-100"><div class="small text-muted">Interview</div><div class="h6 mb-0">{{ latest_interview.score if latest_interview else 0 }}%</div></div></div></div></div></div>
+  </div>
+  <div class="row g-4">
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h5 class="fw-bold mb-3">Career / Resume / Interview Trend</h5><canvas id="trendChart"></canvas></div></div>
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h5 class="fw-bold mb-3">Skill Gap Progress</h5><canvas id="gapChart"></canvas></div></div>
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h5 class="fw-bold mb-3">Score Comparison</h5><canvas id="barChart"></canvas></div></div>
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h5 class="fw-bold mb-3">Readiness Split</h5><canvas id="pieChart"></canvas></div></div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  const predictionHistory = {{ prediction_history | tojson }};
+  const resumeHistory = {{ resume_history | tojson }};
+  const interviewHistory = {{ interview_history | tojson }};
+  const gapHistory = {{ gap_history | tojson }};
+
+  const chartText = getComputedStyle(document.body).getPropertyValue('--text');
+  const chartMuted = getComputedStyle(document.body).getPropertyValue('--muted');
+
+  new Chart(document.getElementById('trendChart'), {
+    type: 'line',
+    data: {
+      labels: predictionHistory.map((_, index) => `#${index + 1}`),
+      datasets: [
+        { label: 'Prediction', data: predictionHistory, borderColor: '#4f8cff', tension: 0.35 },
+        { label: 'Resume', data: resumeHistory, borderColor: '#26d0ce', tension: 0.35 },
+        { label: 'Interview', data: interviewHistory, borderColor: '#8a5cff', tension: 0.35 }
+      ]
+    },
+    options: { scales: { x: { ticks: { color: chartMuted } }, y: { ticks: { color: chartMuted }, beginAtZero: true, max: 100 } }, plugins: { legend: { labels: { color: chartText } } } }
+  });
+
+  new Chart(document.getElementById('gapChart'), {
+    type: 'bar',
+    data: {
+      labels: gapHistory.map((_, index) => `Analysis ${index + 1}`),
+      datasets: [{ label: 'Skill Match', data: gapHistory, backgroundColor: 'rgba(79,140,255,0.8)' }]
+    },
+    options: { scales: { x: { ticks: { color: chartMuted } }, y: { ticks: { color: chartMuted }, beginAtZero: true, max: 100 } }, plugins: { legend: { labels: { color: chartText } } } }
+  });
+
+  new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Career', 'Resume', 'Interview'],
+      datasets: [{ label: 'Latest Scores', data: [{{ latest_prediction.confidence if latest_prediction else 0 }}, {{ latest_resume.ats_score if latest_resume else 0 }}, {{ latest_interview.score if latest_interview else 0 }}], backgroundColor: ['#4f8cff', '#26d0ce', '#8a5cff'] }]
+    },
+    options: { scales: { x: { ticks: { color: chartMuted } }, y: { ticks: { color: chartMuted }, beginAtZero: true, max: 100 } }, plugins: { legend: { labels: { color: chartText } } } }
+  });
+
+  new Chart(document.getElementById('pieChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Readiness', 'Remaining'],
+      datasets: [{ data: [{{ readiness }}, {{ 100 - readiness }}], backgroundColor: ['#22c55e', 'rgba(255,255,255,0.08)'] }]
+    },
+    options: { plugins: { legend: { labels: { color: chartText } } } }
+  });
+</script>
+{% endblock %}

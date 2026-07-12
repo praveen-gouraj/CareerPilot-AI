@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <div class="glass-card p-5 text-center">
+    <h1 class="display-5 fw-bold">Server Error</h1>
+    <p class="lead text-muted">Something went wrong while processing your request.</p>
+    <a href="{{ url_for('main.landing') }}" class="btn btn-primary-gradient">Return Home</a>
+  </div>
+</div>
+{% endblock %}

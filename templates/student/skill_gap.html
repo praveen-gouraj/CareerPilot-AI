@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Skill Gap Analysis{% endblock %}
+{% block page_title %}Skill Gap Analysis{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <div class="glass-card">
+        <h4 class="fw-bold mb-3">Analyze your skill gap</h4>
+        <form method="post" data-loading-form>
+          <div class="mb-3">
+            <label class="form-label">Target Domain</label>
+            <select name="target_domain" class="form-select">
+              {% for domain in career_domains %}
+              <option value="{{ domain }}" {% if domain == target_domain %}selected{% endif %}>{{ domain }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="row g-2">
+            {% for skill in skills %}
+            <div class="col-6">
+              <label class="glass-card w-100 p-3 d-block" style="cursor:pointer;">
+                <input class="form-check-input me-2" type="checkbox" name="{{ skill.key }}" {% if skill.key in selected_skills %}checked{% endif %}>
+                {{ skill.label }}
+              </label>
+            </div>
+            {% endfor %}
+          </div>
+          <button class="btn btn-primary-gradient w-100 mt-4">Generate Analysis</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <div class="glass-card h-100">
+        {% if analysis %}
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <h4 class="fw-bold mb-0">{{ analysis.target_domain }}</h4>
+            <div class="text-muted small">{{ analysis.description }}</div>
+          </div>
+          <span class="badge badge-success-soft">{{ analysis.score }}% skill match</span>
+        </div>
+        <div class="row g-3 mb-4">
+          <div class="col-md-6"><div class="metric-card"><div class="small text-muted">Match Score</div><div class="h3 mb-0">{{ analysis.score }}%</div></div></div>
+          <div class="col-md-6"><div class="metric-card"><div class="small text-muted">Readiness</div><div class="h3 mb-0">{{ analysis.readiness }}%</div></div></div>
+        </div>
+        <div class="chart-card mb-4">
+          <canvas id="radarChart" height="220"></canvas>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="widget-card h-100">
+              <h6 class="fw-bold">Missing Skills</h6>
+              <div class="d-flex flex-wrap gap-2">
+                {% for skill in analysis.missing_skills %}
+                <span class="badge badge-danger-soft">{{ skill.replace('_', ' ')|title }}</span>
+                {% else %}
+                <span class="badge badge-success-soft">No major gaps found</span>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="widget-card h-100">
+              <h6 class="fw-bold">Recommended Courses</h6>
+              <ul class="mb-0 ps-3">
+                {% for course in analysis.courses %}<li class="mb-1">{{ course }}</li>{% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <h6 class="fw-bold">Learning Roadmap</h6>
+          <div class="timeline-item">{{ analysis.roadmap[0] }}</div>
+          {% for step in analysis.roadmap[1:] %}
+          <div class="timeline-item">{{ step }}</div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5 text-muted">Choose a target domain and your current skills to see the skill gap analysis.</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{% if analysis %}
+<script>
+  const skillLabels = {{ analysis.required_skills | tojson }};
+  const selectedSkills = {{ selected_skills | tojson }};
+  const selectedValues = skillLabels.map((skill) => selectedSkills.includes(skill) ? 100 : 20);
+  const requiredValues = skillLabels.map(() => 100);
+  new Chart(document.getElementById('radarChart'), {
+    type: 'radar',
+    data: {
+      labels: skillLabels.map((skill) => skill.replaceAll('_', ' ').toUpperCase()),
+      datasets: [
+        { label: 'Required', data: requiredValues, borderColor: '#8a5cff', backgroundColor: 'rgba(138,92,255,0.18)' },
+        { label: 'Your Skills', data: selectedValues, borderColor: '#26d0ce', backgroundColor: 'rgba(38,208,206,0.18)' }
+      ]
+    },
+    options: {
+      scales: { r: { ticks: { backdropColor: 'transparent' }, pointLabels: { color: getComputedStyle(document.body).getPropertyValue('--text') } } }
+    }
+  });
+</script>
+{% endif %}
+{% endblock %}

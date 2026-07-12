@@ -1,0 +1,25 @@
+python,java,cpp,sql,web_dev,communication,aptitude,problem_solving,cloud,ai_ml,cybersecurity,data_structures,career
+1,1,1,1,1,1,1,1,0,0,0,1,Software Development
+1,0,0,1,0,1,1,1,0,1,0,0,Data Science
+1,0,0,1,0,1,0,1,0,1,0,0,Data Science
+0,1,1,0,1,1,1,1,0,0,0,1,Software Development
+1,0,0,0,0,1,1,1,1,0,0,0,Cloud Computing
+1,0,0,1,0,1,1,1,1,0,0,0,Cloud Computing
+1,0,0,1,0,1,1,1,0,1,0,1,AI Engineer
+1,0,0,1,0,1,0,1,0,1,0,1,AI Engineer
+1,1,0,1,1,1,1,1,0,0,0,1,Full Stack Developer
+1,0,0,1,1,1,1,1,0,0,0,1,Full Stack Developer
+1,0,0,1,0,1,0,1,0,0,1,0,Cybersecurity
+1,0,0,1,0,1,0,1,0,0,1,0,Cybersecurity
+1,0,0,1,0,1,1,1,1,0,0,0,DevOps Engineer
+1,0,0,1,1,1,1,1,1,0,0,0,DevOps Engineer
+0,0,0,0,1,1,1,1,0,0,0,0,UI/UX Developer
+0,0,0,0,1,1,1,1,0,0,0,0,UI/UX Developer
+1,0,0,1,0,1,1,1,0,1,0,0,Data Science
+1,0,0,1,0,1,1,1,0,0,1,1,Cybersecurity
+1,1,1,1,1,1,0,1,0,0,0,1,Software Development
+1,1,0,1,1,1,1,1,0,0,0,1,Full Stack Developer
+1,0,0,1,0,1,1,1,1,0,0,1,Cloud Computing
+1,0,0,1,0,1,1,1,0,1,0,1,AI Engineer
+0,0,0,0,1,1,1,1,0,0,0,0,UI/UX Developer
+1,0,0,1,0,1,0,1,0,0,1,0,Cybersecurity

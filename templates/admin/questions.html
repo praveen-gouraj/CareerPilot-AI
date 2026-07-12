@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Interview Questions{% endblock %}
+{% block page_title %}Interview Questions{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <div class="glass-card">
+        <h5 class="fw-bold mb-3">Add Question</h5>
+        <form method="post" data-loading-form>
+          <div class="mb-3"><label class="form-label">Category</label><select name="category" class="form-select"><option value="technical">Technical</option><option value="hr">HR</option></select></div>
+          <div class="mb-3"><label class="form-label">Difficulty</label><select name="difficulty" class="form-select"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select></div>
+          <div class="mb-3"><label class="form-label">Question</label><textarea class="form-control" name="question" rows="4"></textarea></div>
+          <div class="mb-3"><label class="form-label">Answer Keywords</label><input class="form-control" name="keywords" placeholder="keyword1, keyword2, keyword3"></div>
+          <button class="btn btn-primary-gradient w-100">Add Question</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <div class="glass-card">
+        <h5 class="fw-bold mb-3">Question Bank</h5>
+        {% for question in questions %}
+        <div class="feature-card mb-3">
+          <div class="d-flex justify-content-between align-items-start gap-3">
+            <div>
+              <div class="badge badge-soft mb-2 text-capitalize">{{ question.category }}</div>
+              <h6 class="mb-2">{{ question.question }}</h6>
+              <div class="small text-muted">{{ question.difficulty }}</div>
+            </div>
+            <form method="post" action="{{ url_for('admin.delete_question', question_id=question.id) }}">
+              <button class="btn btn-outline-soft btn-sm">Delete</button>
+            </form>
+          </div>
+        </div>
+        {% else %}
+        <p class="text-muted">No interview questions added yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

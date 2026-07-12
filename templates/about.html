@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}About Project{% endblock %}
+{% block page_title %}About Project{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="glass-card mb-4">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-8">
+        <span class="badge badge-soft mb-3">Project Overview</span>
+        <h2 class="fw-bold">AI-Based Career Guidance and Placement System using KNN and NLP</h2>
+        <p class="text-muted mb-0">This platform combines Flask, scikit-learn, NLP, session authentication, and a modern dashboard UI to help students assess career fit, identify skill gaps, review resumes, and practice interviews in one place.</p>
+      </div>
+      <div class="col-lg-4">
+        <div class="stat-card text-center"><div class="stat-value">Full Stack</div><div class="stat-label">Frontend, backend, ML, NLP, analytics</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="feature-grid">
+    <div class="feature-card"><h5>Machine Learning</h5><p class="text-muted">A KNN model predicts the best career domains from the selected skill profile.</p></div>
+    <div class="feature-card"><h5>NLP Resume Review</h5><p class="text-muted">Resume text is extracted, keywords are matched, and ATS-style scoring is generated.</p></div>
+    <div class="feature-card"><h5>Placement Analytics</h5><p class="text-muted">Charts and progress views summarize readiness, interview performance, and career recommendations.</p></div>
+    <div class="feature-card"><h5>Admin Controls</h5><p class="text-muted">Administrators can manage users, domains, and interview question banks from the secure panel.</p></div>
+  </div>
+</div>
+{% endblock %}
