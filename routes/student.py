@@ -124,6 +124,11 @@ def career_prediction():
         latest_prediction=latest_prediction,
     )
 
+@student_bp.route("/career-assistant")
+@login_required
+def career_assistant():
+    return render_template("student/career_assistant.html")
+
 
 @student_bp.route("/bookmark-career/<domain_name>", methods=["POST"])
 @login_required
@@ -383,3 +388,4 @@ def download_report():
 def rankings():
     rankings = build_user_rankings()
     return render_template("student/rankings.html", rankings=rankings)
+

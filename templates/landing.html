@@ -1,67 +1,872 @@
 {% extends "base.html" %}
+
 {% block title %}Career Guidance Platform{% endblock %}
-{% block page_title %}Landing Page{% endblock %}
+
+{% block page_title %}AI-Powered Career Guidance{% endblock %}
+
 {% block content %}
+
+<!-- =========================================================
+     HERO SECTION
+========================================================= -->
+
 <section class="hero position-relative overflow-hidden">
+
   <div class="hero-orb orb-1"></div>
   <div class="hero-orb orb-2"></div>
+
   <div class="container position-relative">
-    <div class="row align-items-center g-4">
+
+    <div class="row align-items-center g-5">
+
+      <!-- HERO CONTENT -->
       <div class="col-lg-7">
-        <span class="badge badge-soft mb-3">KNN + NLP Powered Placement Platform</span>
-        <h1 class="hero-title mb-4">Build a stronger career path with <span class="gradient-text">AI-driven guidance</span>.</h1>
-        <p class="hero-copy mb-4">Get intelligent career recommendations, compare your skills with industry needs, analyze resumes with NLP, practice interview questions, and monitor placement readiness from one modern dashboard.</p>
+
+        <span class="badge badge-soft mb-3">
+          <i class="bi bi-stars"></i>
+          KNN + NLP Powered Placement Platform
+        </span>
+
+        <h1 class="hero-title mb-4">
+          Build a stronger career path with
+          <span class="gradient-text">
+            AI-driven guidance
+          </span>
+        </h1>
+
+        <p class="hero-copy mb-4">
+          Get intelligent career recommendations, compare your skills
+          with industry needs, analyze resumes with NLP, practice
+          interview questions, and monitor placement readiness
+          from one modern platform.
+        </p>
+
         <div class="d-flex flex-wrap gap-3">
-          <a href="{{ url_for('auth.register') }}" class="btn btn-primary-gradient btn-lg">Get Started</a>
-          <a href="{{ url_for('auth.login') }}" class="btn btn-outline-soft btn-lg">Login</a>
-          <a href="{{ url_for('main.about') }}" class="btn btn-outline-soft btn-lg">Explore Project</a>
+
+          <a
+            href="{{ url_for('auth.register') }}"
+            class="btn btn-primary-gradient btn-lg"
+          >
+            <i class="bi bi-rocket-takeoff me-2"></i>
+            Get Started
+          </a>
+
+          <a
+            href="{{ url_for('main.about') }}"
+            class="btn btn-outline-soft btn-lg"
+          >
+            <i class="bi bi-info-circle me-2"></i>
+            Explore Platform
+          </a>
+
         </div>
+
       </div>
+
+
+      <!-- HERO ANALYTICS CARD -->
       <div class="col-lg-5">
+
         <div class="hero-card glow-ring">
+
           <div class="d-flex justify-content-between align-items-start mb-4">
+
             <div>
-              <div class="small text-muted">Placement readiness</div>
-              <div class="display-6 fw-bold">92%</div>
+
+              <div class="small text-muted">
+                Placement readiness
+              </div>
+
+              <div class="display-6 fw-bold">
+                92%
+              </div>
+
             </div>
-            <div class="badge badge-success-soft">Live Analytics</div>
+
+            <div class="badge badge-success-soft">
+              <i class="bi bi-activity me-1"></i>
+              Live Analytics
+            </div>
+
           </div>
+
+
+          <!-- Career Prediction -->
+
           <div class="mb-3">
-            <div class="d-flex justify-content-between small mb-1"><span>Career Prediction</span><span>87%</span></div>
-            <div class="progress"><div class="progress-bar" style="width:87%"></div></div>
+
+            <div class="d-flex justify-content-between small mb-1">
+              <span>Career Prediction</span>
+              <span>87%</span>
+            </div>
+
+            <div class="progress">
+              <div
+                class="progress-bar"
+                style="width:87%"
+              ></div>
+            </div>
+
           </div>
+
+
+          <!-- Resume ATS -->
+
           <div class="mb-3">
-            <div class="d-flex justify-content-between small mb-1"><span>Resume ATS</span><span>81%</span></div>
-            <div class="progress"><div class="progress-bar" style="width:81%"></div></div>
+
+            <div class="d-flex justify-content-between small mb-1">
+              <span>Resume ATS</span>
+              <span>81%</span>
+            </div>
+
+            <div class="progress">
+              <div
+                class="progress-bar"
+                style="width:81%"
+              ></div>
+            </div>
+
           </div>
+
+
+          <!-- Interview -->
+
           <div class="mb-3">
-            <div class="d-flex justify-content-between small mb-1"><span>Interview Score</span><span>78%</span></div>
-            <div class="progress"><div class="progress-bar" style="width:78%"></div></div>
+
+            <div class="d-flex justify-content-between small mb-1">
+              <span>Interview Score</span>
+              <span>78%</span>
+            </div>
+
+            <div class="progress">
+              <div
+                class="progress-bar"
+                style="width:78%"
+              ></div>
+            </div>
+
           </div>
+
+
+          <!-- Statistics -->
+
           <div class="row g-3 mt-3">
-            <div class="col-6"><div class="stat-card"><div class="stat-value">8</div><div class="stat-label">Career Domains</div></div></div>
-            <div class="col-6"><div class="stat-card"><div class="stat-value">12</div><div class="stat-label">Core Skills</div></div></div>
+
+            <div class="col-6">
+
+              <div class="stat-card">
+
+                <div class="stat-value">
+                  8
+                </div>
+
+                <div class="stat-label">
+                  Career Domains
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="col-6">
+
+              <div class="stat-card">
+
+                <div class="stat-value">
+                  12
+                </div>
+
+                <div class="stat-label">
+                  Core Skills
+                </div>
+
+              </div>
+
+            </div>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
+
+
+    <!-- =====================================================
+         TECHNOLOGY STATS
+    ====================================================== -->
 
     <div class="stats-grid mt-5">
-      <div class="stat-card"><div class="stat-value">KNN</div><div class="stat-label">Career recommendation engine</div></div>
-      <div class="stat-card"><div class="stat-value">NLP</div><div class="stat-label">Resume keyword and ATS analysis</div></div>
-      <div class="stat-card"><div class="stat-value">Chart.js</div><div class="stat-label">Visual analytics and progress tracking</div></div>
-      <div class="stat-card"><div class="stat-value">Flask</div><div class="stat-label">Secure backend and session management</div></div>
+
+      <div class="stat-card">
+
+        <div class="stat-value">
+          KNN
+        </div>
+
+        <div class="stat-label">
+          Career recommendation engine
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-value">
+          NLP
+        </div>
+
+        <div class="stat-label">
+          Resume keyword and ATS analysis
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-value">
+          Chart.js
+        </div>
+
+        <div class="stat-label">
+          Visual analytics and progress tracking
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-value">
+          Flask
+        </div>
+
+        <div class="stat-label">
+          Secure backend and session management
+        </div>
+
+      </div>
+
     </div>
 
-    <div class="mt-5">
-      <div class="section-title">Everything students need to prepare for placement</div>
-      <div class="feature-grid">
-        <div class="feature-card"><i class="bi bi-stars fs-3 text-info"></i><h5 class="mt-3">Career Guidance</h5><p class="text-muted mb-0">Predict the best-fit domain from your current skill profile and see top matches instantly.</p></div>
-        <div class="feature-card"><i class="bi bi-diagram-3 fs-3 text-info"></i><h5 class="mt-3">Skill Gap Analysis</h5><p class="text-muted mb-0">Discover missing skills, required courses, and a practical roadmap for improvement.</p></div>
-        <div class="feature-card"><i class="bi bi-file-earmark-text fs-3 text-info"></i><h5 class="mt-3">Resume Review</h5><p class="text-muted mb-0">Upload your resume and compare it with role-specific job descriptions using NLP.</p></div>
-        <div class="feature-card"><i class="bi bi-chat-square-text fs-3 text-info"></i><h5 class="mt-3">Mock Interviews</h5><p class="text-muted mb-0">Practice technical and HR rounds with automated response evaluation and feedback.</p></div>
+
+    <!-- =====================================================
+         FEATURES
+    ====================================================== -->
+
+    <section class="landing-section mt-5">
+
+      <div class="mb-4">
+
+        <span class="badge badge-soft mb-2">
+          Platform Features
+        </span>
+
+        <div class="section-title">
+          Everything you need for placement preparation
+        </div>
+
+        <div class="section-subtitle">
+          One platform to discover your career path, improve your
+          skills, strengthen your resume, and prepare for interviews.
+        </div>
+
       </div>
-    </div>
+
+
+      <div class="feature-grid">
+
+        <!-- Career Guidance -->
+
+        <div class="feature-card">
+
+          <i class="bi bi-stars fs-3 text-info"></i>
+
+          <h5 class="mt-3">
+            Career Guidance
+          </h5>
+
+          <p class="text-muted mb-0">
+            Predict suitable career domains from your current
+            skill profile and discover your strongest career matches.
+          </p>
+
+        </div>
+
+
+        <!-- Skill Gap -->
+
+        <div class="feature-card">
+
+          <i class="bi bi-diagram-3 fs-3 text-info"></i>
+
+          <h5 class="mt-3">
+            Skill Gap Analysis
+          </h5>
+
+          <p class="text-muted mb-0">
+            Identify missing skills and receive a practical
+            learning roadmap for your target career.
+          </p>
+
+        </div>
+
+
+        <!-- Resume -->
+
+        <div class="feature-card">
+
+          <i class="bi bi-file-earmark-text fs-3 text-info"></i>
+
+          <h5 class="mt-3">
+            Resume Analyzer
+          </h5>
+
+          <p class="text-muted mb-0">
+            Analyze your resume with NLP and identify keywords,
+            missing skills, and ATS improvement opportunities.
+          </p>
+
+        </div>
+
+
+        <!-- Interview -->
+
+        <div class="feature-card">
+
+          <i class="bi bi-chat-square-text fs-3 text-info"></i>
+
+          <h5 class="mt-3">
+            Mock Interviews
+          </h5>
+
+          <p class="text-muted mb-0">
+            Practice technical and HR questions with automated
+            evaluation and personalized feedback.
+          </p>
+
+        </div>
+
+
+        <!-- AI Assistant -->
+
+        <div class="feature-card">
+
+          <i class="bi bi-robot fs-3 text-info"></i>
+
+          <h5 class="mt-3">
+            AI Career Assistant
+          </h5>
+
+          <p class="text-muted mb-0">
+            Get instant guidance about careers, skills, resumes,
+            interviews, and placement preparation.
+          </p>
+
+        </div>
+
+
+        <!-- Analytics -->
+
+        <!-- <div class="feature-card">
+
+          <i class="bi bi-graph-up-arrow fs-3 text-info"></i>
+
+          <h5 class="mt-3">
+            Placement Analytics
+          </h5>
+
+          <p class="text-muted mb-0">
+            Track your career predictions, resume performance,
+            interview scores, skill progress, and readiness.
+          </p>
+
+        </div> -->
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         HOW IT WORKS
+    ====================================================== -->
+
+    <section class="landing-section mt-5">
+
+      <div class="text-center mb-5">
+
+        <span class="badge badge-soft mb-2">
+          Simple Process
+        </span>
+
+        <div class="section-title">
+          How the platform works
+        </div>
+
+        <div class="section-subtitle">
+          Follow a simple path from discovering your strengths
+          to becoming placement ready.
+        </div>
+
+      </div>
+
+
+      <div class="feature-grid">
+
+        <!-- Step 1 -->
+
+        <div class="feature-card text-center">
+
+          <div class="landing-step-number">
+            01
+          </div>
+
+          <i class="bi bi-person-check fs-1 text-info"></i>
+
+          <h5 class="mt-3">
+            Build Your Profile
+          </h5>
+
+          <p class="text-muted mb-0">
+            Add your technical skills, interests, and career
+            preferences to build your profile.
+          </p>
+
+        </div>
+
+
+        <!-- Step 2 -->
+
+        <div class="feature-card text-center">
+
+          <div class="landing-step-number">
+            02
+          </div>
+
+          <i class="bi bi-stars fs-1 text-info"></i>
+
+          <h5 class="mt-3">
+            Discover Your Career
+          </h5>
+
+          <p class="text-muted mb-0">
+            Use AI and KNN-based recommendations to identify
+            suitable career domains.
+          </p>
+
+        </div>
+
+
+        <!-- Step 3 -->
+
+        <div class="feature-card text-center">
+
+          <div class="landing-step-number">
+            03
+          </div>
+
+          <i class="bi bi-diagram-3 fs-1 text-info"></i>
+
+          <h5 class="mt-3">
+            Identify Skill Gaps
+          </h5>
+
+          <p class="text-muted mb-0">
+            Compare your skills with target career requirements
+            and identify what you need to improve.
+          </p>
+
+        </div>
+
+
+        <!-- Step 4 -->
+
+        <div class="feature-card text-center">
+
+          <div class="landing-step-number">
+            04
+          </div>
+
+          <i class="bi bi-trophy fs-1 text-info"></i>
+
+          <h5 class="mt-3">
+            Prepare for Placement
+          </h5>
+
+          <p class="text-muted mb-0">
+            Improve your resume, practice interviews, and track
+            your overall placement readiness.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         AI TECHNOLOGY SECTION
+    ====================================================== -->
+
+    <section class="landing-section mt-5">
+
+      <div class="glass-card landing-tech-section">
+
+        <div class="row align-items-center g-4">
+
+          <div class="col-lg-6">
+
+            <span class="badge badge-soft mb-3">
+              Intelligent Career Platform
+            </span>
+
+            <h2 class="section-title">
+              Powered by AI, Machine Learning and NLP
+            </h2>
+
+            <p class="section-subtitle mb-0">
+              The platform combines machine learning, natural
+              language processing, analytics, and modern web
+              technologies to provide personalized career
+              guidance and placement preparation.
+            </p>
+
+          </div>
+
+
+          <div class="col-lg-6">
+
+            <div class="tech-grid">
+
+              <div class="tech-item">
+
+                <i class="bi bi-cpu"></i>
+
+                <div>
+                  <strong>KNN</strong>
+                  <small>Career prediction</small>
+                </div>
+
+              </div>
+
+
+              <div class="tech-item">
+
+                <i class="bi bi-file-text"></i>
+
+                <div>
+                  <strong>NLP</strong>
+                  <small>Resume analysis</small>
+                </div>
+
+              </div>
+
+
+              <div class="tech-item">
+
+                <i class="bi bi-bar-chart"></i>
+
+                <div>
+                  <strong>Analytics</strong>
+                  <small>Progress tracking</small>
+                </div>
+
+              </div>
+
+
+              <div class="tech-item">
+
+                <i class="bi bi-robot"></i>
+
+                <div>
+                  <strong>AI Assistant</strong>
+                  <small>Career guidance</small>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PLATFORM BENEFITS
+    ====================================================== -->
+
+    <section class="landing-section mt-5">
+
+      <div class="text-center mb-5">
+
+        <span class="badge badge-soft mb-2">
+          Complete Placement Platform
+        </span>
+
+        <div class="section-title">
+          One platform for your entire career journey
+        </div>
+
+        <div class="section-subtitle">
+          Everything you need to understand your career direction
+          and prepare for placement.
+        </div>
+
+      </div>
+
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+
+          <div class="stat-value">
+            <i class="bi bi-stars"></i>
+          </div>
+
+          <div class="stat-label">
+            AI Career Recommendations
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-value">
+            <i class="bi bi-file-earmark-person"></i>
+          </div>
+
+          <div class="stat-label">
+            Resume ATS Analysis
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-value">
+            <i class="bi bi-chat-square-text"></i>
+          </div>
+
+          <div class="stat-label">
+            Mock Interview Practice
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-value">
+            <i class="bi bi-graph-up"></i>
+          </div>
+
+          <div class="stat-label">
+            Placement Readiness Tracking
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FINAL CTA
+    ====================================================== -->
+
+    <section class="landing-section mt-5">
+
+      <div class="hero-card landing-cta text-center">
+
+        <span class="badge badge-soft mb-3">
+          Start Your Journey
+        </span>
+
+        <h2 class="section-title">
+          Ready to build your career path?
+        </h2>
+
+        <p class="section-subtitle">
+          Discover your strengths, identify skill gaps,
+          improve your resume, and prepare for your next interview.
+        </p>
+
+        <div class="d-flex justify-content-center flex-wrap gap-3">
+
+          <a
+            href="{{ url_for('auth.register') }}"
+            class="btn btn-primary-gradient btn-lg"
+          >
+            <i class="bi bi-rocket-takeoff me-2"></i>
+            Get Started
+          </a>
+
+          <a
+            href="{{ url_for('main.about') }}"
+            class="btn btn-outline-soft btn-lg"
+          >
+            Learn More
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="landing-footer mt-5">
+
+      <div class="row g-4">
+
+        <!-- Brand -->
+
+        <div class="col-lg-5">
+
+          <div class="d-flex align-items-center gap-3 mb-3">
+
+            <div class="brand-mark">
+              <i class="bi bi-graph-up-arrow"></i>
+            </div>
+
+            <div>
+
+              <div class="brand-title">
+                Career Guidance System
+              </div>
+
+              <div class="brand-subtitle">
+                AI-powered career guidance and placement preparation
+              </div>
+
+            </div>
+
+          </div>
+
+          <p class="text-muted mb-0">
+            Helping students discover suitable career paths,
+            identify skill gaps, strengthen their resumes,
+            and prepare for successful placements.
+          </p>
+
+        </div>
+
+
+        <!-- Platform -->
+
+        <div class="col-6 col-lg-2">
+
+          <h6>
+            Platform
+          </h6>
+
+          <a href="{{ url_for('auth.register') }}">
+            Get Started
+          </a>
+
+          <a href="{{ url_for('main.about') }}">
+            About
+          </a>
+
+          <a href="{{ url_for('main.contact') }}">
+            Contact
+          </a>
+
+        </div>
+
+
+        <!-- Features -->
+
+        <div class="col-6 col-lg-2">
+
+          <h6>
+            Features
+          </h6>
+
+          <span>
+            Career Prediction
+          </span>
+
+          <span>
+            Skill Gap Analysis
+          </span>
+
+          <span>
+            Resume Analyzer
+          </span>
+
+          <span>
+            Mock Interviews
+          </span>
+
+        </div>
+
+
+        <!-- Technology -->
+
+        <div class="col-lg-3">
+
+          <h6>
+            Technology
+          </h6>
+
+          <span>
+            KNN
+          </span>
+
+          <span>
+            NLP
+          </span>
+
+          <span>
+            Flask
+          </span>
+
+          <span>
+            Chart.js
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Footer Bottom -->
+
+      <div class="landing-footer-bottom">
+
+        <span>
+          © 2026 Career Guidance System
+        </span>
+
+        <span>
+          AI-Based Career Guidance and Placement System
+        </span>
+
+      </div>
+
+    </footer>
+
   </div>
+
 </section>
+
 {% endblock %}

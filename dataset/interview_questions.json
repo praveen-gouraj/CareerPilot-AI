@@ -1,26 +1,362 @@
 [
   {
     "category": "technical",
-    "question": "Explain the difference between a stack and a queue.",
-    "answer_keywords": ["stack", "queue", "lifo", "fifo"],
+    "question": "What is the difference between an array and a linked list?",
+    "answer_keywords": ["array", "linked list", "memory", "access", "insertion"],
     "difficulty": "easy"
   },
   {
     "category": "technical",
-    "question": "What is normalization in a database and why is it important?",
-    "answer_keywords": ["normalization", "redundancy", "database", "design"],
+    "question": "What is a binary search and when can it be used?",
+    "answer_keywords": ["binary search", "sorted", "array", "search", "logarithmic"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is the difference between a stack and a heap?",
+    "answer_keywords": ["stack", "heap", "memory", "allocation", "variables"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What is recursion and where is it commonly used?",
+    "answer_keywords": ["recursion", "function", "base case", "recursive", "stack"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is a linked list and what are its advantages?",
+    "answer_keywords": ["linked list", "nodes", "pointers", "dynamic", "insertion"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is time complexity and why is it important?",
+    "answer_keywords": ["time complexity", "algorithm", "performance", "input", "Big O"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is the difference between compile-time and run-time errors?",
+    "answer_keywords": ["compile-time", "run-time", "compiler", "execution", "error"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What are the four main principles of object-oriented programming?",
+    "answer_keywords": ["OOP", "encapsulation", "inheritance", "polymorphism", "abstraction"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is inheritance in object-oriented programming?",
+    "answer_keywords": ["inheritance", "class", "parent", "child", "reuse"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is polymorphism in object-oriented programming?",
+    "answer_keywords": ["polymorphism", "overloading", "overriding", "method", "object"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What is encapsulation and why is it useful?",
+    "answer_keywords": ["encapsulation", "data", "class", "access", "security"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is an API and why is it used in web applications?",
+    "answer_keywords": ["API", "application", "communication", "client", "server"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is the difference between HTTP and HTTPS?",
+    "answer_keywords": ["HTTP", "HTTPS", "security", "encryption", "SSL"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is REST API and what are its common HTTP methods?",
+    "answer_keywords": ["REST", "API", "GET", "POST", "PUT", "DELETE"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What is the difference between GET and POST requests?",
+    "answer_keywords": ["GET", "POST", "request", "data", "URL"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is a primary key in a database?",
+    "answer_keywords": ["primary key", "unique", "record", "database", "NULL"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is a foreign key and why is it used?",
+    "answer_keywords": ["foreign key", "relationship", "table", "primary key", "database"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is the difference between SQL and NoSQL databases?",
+    "answer_keywords": ["SQL", "NoSQL", "relational", "document", "schema"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What is a database transaction?",
+    "answer_keywords": ["transaction", "database", "ACID", "commit", "rollback"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What are ACID properties in databases?",
+    "answer_keywords": ["ACID", "atomicity", "consistency", "isolation", "durability"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What is an operating system and what are its main functions?",
+    "answer_keywords": ["operating system", "memory", "process", "file", "resource"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is the difference between a process and a thread?",
+    "answer_keywords": ["process", "thread", "memory", "execution", "CPU"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What is deadlock in an operating system?",
+    "answer_keywords": ["deadlock", "process", "resource", "waiting", "circular"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What is virtual memory?",
+    "answer_keywords": ["virtual memory", "RAM", "disk", "memory", "paging"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What is the difference between TCP and UDP?",
+    "answer_keywords": ["TCP", "UDP", "connection", "reliable", "speed"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What is an IP address?",
+    "answer_keywords": ["IP address", "network", "device", "IPv4", "IPv6"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is DNS and how does it work?",
+    "answer_keywords": ["DNS", "domain", "IP address", "server", "resolution"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What is Git and why is it used in software development?",
+    "answer_keywords": ["Git", "version control", "repository", "commit", "branch"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is the difference between Git merge and Git rebase?",
+    "answer_keywords": ["Git", "merge", "rebase", "branch", "history"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What is the difference between frontend and backend development?",
+    "answer_keywords": ["frontend", "backend", "UI", "server", "database"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is React and why is it used?",
+    "answer_keywords": ["React", "component", "UI", "JavaScript", "frontend"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "technical",
+    "question": "What is Node.js and how is it different from JavaScript in the browser?",
+    "answer_keywords": ["Node.js", "JavaScript", "runtime", "server", "browser"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What is middleware in Express.js?",
+    "answer_keywords": ["middleware", "Express", "request", "response", "next"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What is authentication and how is it different from authorization?",
+    "answer_keywords": ["authentication", "authorization", "identity", "access", "security"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "technical",
+    "question": "What is JWT and how is it used for authentication?",
+    "answer_keywords": ["JWT", "token", "authentication", "payload", "security"],
     "difficulty": "medium"
   },
   {
     "category": "hr",
-    "question": "Tell me about a time you solved a difficult problem.",
-    "answer_keywords": ["problem", "solution", "team", "result"],
+    "question": "Tell me about yourself.",
+    "answer_keywords": ["education", "skills", "experience", "projects", "goals"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "hr",
+    "question": "What are your greatest strengths?",
+    "answer_keywords": ["strengths", "skills", "communication", "teamwork", "learning"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "hr",
+    "question": "What is your biggest weakness and how are you improving it?",
+    "answer_keywords": ["weakness", "improvement", "learning", "self-awareness", "progress"],
     "difficulty": "medium"
   },
   {
     "category": "hr",
-    "question": "Why should we hire you?",
-    "answer_keywords": ["skills", "value", "team", "learn"],
+    "question": "Where do you see yourself in five years?",
+    "answer_keywords": ["career", "growth", "skills", "leadership", "goals"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "hr",
+    "question": "Why do you want to work for our company?",
+    "answer_keywords": ["company", "interest", "career", "growth", "value"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "hr",
+    "question": "Why did you choose computer science as your career?",
+    "answer_keywords": ["computer science", "technology", "interest", "problem-solving", "career"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "hr",
+    "question": "Describe a project that you are proud of.",
+    "answer_keywords": ["project", "role", "technology", "challenge", "result"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "hr",
+    "question": "What was the biggest challenge you faced during a project?",
+    "answer_keywords": ["challenge", "project", "problem", "solution", "result"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "hr",
+    "question": "Tell me about a time when you worked as part of a team.",
+    "answer_keywords": ["team", "collaboration", "communication", "responsibility", "result"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "hr",
+    "question": "How do you handle disagreements with your teammates?",
+    "answer_keywords": ["disagreement", "communication", "teamwork", "discussion", "solution"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "hr",
+    "question": "How do you handle pressure and tight deadlines?",
+    "answer_keywords": ["pressure", "deadline", "planning", "priorities", "focus"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "hr",
+    "question": "How do you prioritize multiple tasks?",
+    "answer_keywords": ["prioritize", "tasks", "deadline", "importance", "planning"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "hr",
+    "question": "Tell me about a mistake you made and what you learned from it.",
+    "answer_keywords": ["mistake", "learning", "responsibility", "improvement", "experience"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "hr",
+    "question": "How do you respond to constructive criticism?",
+    "answer_keywords": ["feedback", "criticism", "improvement", "learning", "communication"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "hr",
+    "question": "How do you keep yourself motivated when facing a difficult task?",
+    "answer_keywords": ["motivation", "goal", "persistence", "problem", "progress"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "hr",
+    "question": "Are you comfortable learning new technologies?",
+    "answer_keywords": ["learning", "technology", "adaptability", "skills", "growth"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "hr",
+    "question": "How do you manage your time between multiple responsibilities?",
+    "answer_keywords": ["time management", "planning", "priority", "responsibility", "deadline"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "hr",
+    "question": "What motivates you to perform your best?",
+    "answer_keywords": ["motivation", "growth", "learning", "achievement", "goals"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "hr",
+    "question": "What kind of work environment do you prefer?",
+    "answer_keywords": ["environment", "teamwork", "collaboration", "learning", "communication"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "hr",
+    "question": "Do you prefer working independently or in a team?",
+    "answer_keywords": ["independent", "team", "collaboration", "responsibility", "flexibility"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "hr",
+    "question": "How would your teammates describe you?",
+    "answer_keywords": ["team", "reliable", "communication", "helpful", "responsible"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "hr",
+    "question": "Tell me about a time when you demonstrated leadership.",
+    "answer_keywords": ["leadership", "team", "responsibility", "decision", "result"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "hr",
+    "question": "What would you do if you were assigned a task you did not know how to complete?",
+    "answer_keywords": ["research", "learning", "help", "problem-solving", "solution"],
+    "difficulty": "medium"
+  },
+  {
+    "category": "hr",
+    "question": "How do you deal with failure?",
+    "answer_keywords": ["failure", "learning", "improvement", "feedback", "persistence"],
+    "difficulty": "easy"
+  },
+  {
+    "category": "hr",
+    "question": "What are your short-term and long-term career goals?",
+    "answer_keywords": ["career", "goals", "skills", "growth", "future"],
     "difficulty": "easy"
   }
 ]

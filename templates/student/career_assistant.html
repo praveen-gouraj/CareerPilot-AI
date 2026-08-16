@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Career Assistant{% endblock %}
+
+{% block page_title %}Career Assistant{% endblock %}
+
+{% block content %}
+
+<div class="career-assistant-page">
+
+  <div class="glass-card career-assistant-header mb-4">
+    <div>
+      <span class="badge badge-soft mb-2">
+        <i class="bi bi-stars"></i> AI Career Assistant
+      </span>
+
+      <h2 class="mb-2">How can I help you?</h2>
+
+      <p class="text-muted mb-0">
+        Ask questions about career prediction, skills, resumes,
+        interviews, learning paths, or placement preparation.
+      </p>
+    </div>
+  </div>
+
+
+  <div class="career-assistant-layout">
+
+    <!-- Assistant Chat -->
+    <div class="glass-card assistant-main-card">
+
+      <div class="assistant-main-header">
+        <div class="d-flex align-items-center gap-3">
+          <div class="assistant-icon">
+            <i class="bi bi-robot"></i>
+          </div>
+
+          <div>
+            <h5 class="mb-1">Career Assistant</h5>
+            <small class="text-muted">
+              AI-powered career guidance
+            </small>
+          </div>
+        </div>
+
+        <span class="badge badge-success-soft">
+          <i class="bi bi-circle-fill"></i> Online
+        </span>
+      </div>
+
+
+      <!-- Messages -->
+      <div id="assistantMessages" class="assistant-chat-area">
+
+        <div class="assistant-message">
+          <div class="assistant-avatar">
+            <i class="bi bi-robot"></i>
+          </div>
+
+          <div class="assistant-message-content">
+            <strong>Career Assistant</strong>
+
+            <p class="mb-0">
+              Hello! I'm your Career Assistant.
+              Ask me anything about career prediction,
+              skill gaps, resumes, interviews, or placement preparation.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- Input -->
+      <div class="assistant-input-area">
+
+        <form id="assistantForm" class="d-flex gap-2">
+
+          <input
+            type="text"
+            name="message"
+            class="form-control"
+            placeholder="Ask about your career..."
+            autocomplete="off"
+            required
+          >
+
+          <button
+            type="submit"
+            class="btn btn-primary-gradient"
+          >
+            <i class="bi bi-send"></i>
+            Send
+          </button>
+
+        </form>
+
+        <small class="text-muted mt-2 d-block">
+          Try asking: "Which skills should I learn for a software developer career?"
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <!-- Quick Actions -->
+    <div class="career-assistant-actions">
+
+      <div class="glass-card">
+
+        <h5 class="mb-3">
+          <i class="bi bi-lightning-charge"></i>
+          Quick Questions
+        </h5>
+
+        <button
+          class="assistant-quick-question"
+          data-question="What career is best for my skills?"
+        >
+          <i class="bi bi-compass"></i>
+          What career is best for my skills?
+        </button>
+
+        <button
+          class="assistant-quick-question"
+          data-question="What skills should I learn for software development?"
+        >
+          <i class="bi bi-code-slash"></i>
+          Skills for software development
+        </button>
+
+        <button
+          class="assistant-quick-question"
+          data-question="How can I improve my resume?"
+        >
+          <i class="bi bi-file-earmark-text"></i>
+          How can I improve my resume?
+        </button>
+
+        <button
+          class="assistant-quick-question"
+          data-question="How should I prepare for technical interviews?"
+        >
+          <i class="bi bi-chat-square-text"></i>
+          Prepare for technical interviews
+        </button>
+
+        <button
+          class="assistant-quick-question"
+          data-question="What skills are required for AI and Machine Learning?"
+        >
+          <i class="bi bi-cpu"></i>
+          AI/ML skills
+        </button>
+
+      </div>
+
+
+      <div class="glass-card mt-3">
+
+        <h5 class="mb-3">
+          <i class="bi bi-stars"></i>
+          Assistant Features
+        </h5>
+
+        <div class="assistant-feature">
+          <i class="bi bi-compass"></i>
+          <span>Career Guidance</span>
+        </div>
+
+        <div class="assistant-feature">
+          <i class="bi bi-bar-chart"></i>
+          <span>Skill Recommendations</span>
+        </div>
+
+        <div class="assistant-feature">
+          <i class="bi bi-file-earmark-person"></i>
+          <span>Resume Guidance</span>
+        </div>
+
+        <div class="assistant-feature">
+          <i class="bi bi-mic"></i>
+          <span>Interview Preparation</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

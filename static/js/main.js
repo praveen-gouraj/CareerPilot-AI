@@ -56,3 +56,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const assistantLink = document.getElementById("careerAssistantLink");
+  const assistantWidget = document.getElementById("assistantWidget");
+
+  if (!assistantLink || !assistantWidget) return;
+
+  assistantLink.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    assistantWidget.classList.toggle("assistant-open");
+  });
+});
