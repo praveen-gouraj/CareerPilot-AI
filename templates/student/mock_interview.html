@@ -1,97 +1,654 @@
 {% extends "base.html" %}
+
 {% block title %}Mock Interview{% endblock %}
 {% block page_title %}Mock Interview{% endblock %}
+
 {% block content %}
-<div class="container py-4">
-  <div class="row g-4">
-    <div class="col-lg-5">
-      <div class="glass-card">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4 class="fw-bold mb-0">Practice Session</h4>
-          <span class="badge badge-soft text-capitalize">{{ category }}</span>
+
+<div class="mock-interview-page">
+
+  <!-- =====================================================
+       PAGE INTRO
+  ====================================================== -->
+  <section class="mock-hero glass-card">
+
+    <div>
+      <span class="badge badge-soft mock-badge">
+        <i class="bi bi-mic"></i>
+        Interview Preparation
+      </span>
+
+      <h1>
+        Practice like it's the
+        <span class="gradient-text">real interview.</span>
+      </h1>
+
+      <p>
+        Test your knowledge, improve your answers, and receive instant
+        feedback on your interview performance.
+      </p>
+    </div>
+
+    <div class="mock-hero-stat">
+      <div class="mock-stat-icon">
+        <i class="bi bi-chat-square-text"></i>
+      </div>
+
+      <div>
+        <span>Current Mode</span>
+        <strong class="text-capitalize">{{ category }}</strong>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       MAIN INTERVIEW AREA
+  ====================================================== -->
+  <div class="mock-layout">
+
+    <!-- ===================================================
+         LEFT - INTERVIEW SESSION
+    ==================================================== -->
+    <section class="mock-session glass-card">
+
+      <div class="session-header">
+
+        <div>
+          <span class="section-eyebrow">
+            <i class="bi bi-play-circle"></i>
+            PRACTICE SESSION
+          </span>
+
+          <h2>Interview Challenge</h2>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Category</label>
-          <form method="get">
-            <select name="category" class="form-select" onchange="this.form.submit()">
-              <option value="technical" {% if category == 'technical' %}selected{% endif %}>Technical</option>
-              <option value="hr" {% if category == 'hr' %}selected{% endif %}>HR</option>
+
+        <span class="category-badge">
+          <i class="bi bi-circle-fill"></i>
+          {{ category }}
+        </span>
+
+      </div>
+
+
+      <!-- CATEGORY -->
+      <div class="interview-control">
+
+        <label class="form-label">
+          Interview Type
+        </label>
+
+        <form method="get">
+
+          <div class="select-wrapper">
+
+            <i class="bi bi-layers"></i>
+
+            <select
+              name="category"
+              class="form-select"
+              onchange="this.form.submit()"
+            >
+
+              <option
+                value="technical"
+                {% if category == 'technical' %}selected{% endif %}
+              >
+                Technical Interview
+              </option>
+
+              <option
+                value="hr"
+                {% if category == 'hr' %}selected{% endif %}
+              >
+                HR Interview
+              </option>
+
             </select>
-          </form>
-        </div>
-        <div class="metric-card mb-3 text-center">
-          <div class="small text-muted">Timer</div>
-          <div class="h2 mb-0" id="countdown">05:00</div>
-        </div>
-        {% if question %}
-        <div class="feature-card mb-3">
-          <div class="small text-muted mb-2">Random Question</div>
-          <h5 class="mb-0">{{ question.question }}</h5>
-        </div>
-        <form method="post" data-loading-form>
-          <input type="hidden" name="question_id" value="{{ question.id }}">
-          <input type="hidden" name="category" value="{{ category }}">
-          <div class="mb-3">
-            <label class="form-label">Your Answer</label>
-            <textarea class="form-control" name="response_text" id="response_text" rows="8" placeholder="Type your response..." required></textarea>
+
           </div>
-          <button class="btn btn-primary-gradient w-100">Submit Answer</button>
+
         </form>
-        {% endif %}
+
       </div>
-    </div>
-    <div class="col-lg-7">
-      <div class="glass-card h-100">
-        {% if result %}
-        <div class="row g-3 mb-4">
-          <div class="col-md-4"><div class="metric-card"><div class="small text-muted">Score</div><div class="h3 mb-0">{{ result.score }}%</div></div></div>
-          <div class="col-md-4"><div class="metric-card"><div class="small text-muted">Coverage</div><div class="h3 mb-0">{{ result.coverage }}%</div></div></div>
-          <div class="col-md-4"><div class="metric-card"><div class="small text-muted">Feedback</div><div class="h6 mb-0">{{ result.feedback }}</div></div></div>
-        </div>
-        <div class="row g-3">
-          <div class="col-md-6">
-            <div class="widget-card h-100">
-              <h6 class="fw-bold">Matched Keywords</h6>
-              <div class="d-flex flex-wrap gap-2">{% for keyword in result.matched_keywords %}<span class="badge badge-success-soft">{{ keyword }}</span>{% else %}<span class="text-muted">No strong keyword matches.</span>{% endfor %}</div>
-            </div>
+
+
+      <!-- TIMER -->
+      <div class="interview-timer">
+
+        <div class="timer-left">
+
+          <div class="timer-icon">
+            <i class="bi bi-stopwatch"></i>
           </div>
-          <div class="col-md-6">
-            <div class="widget-card h-100">
-              <h6 class="fw-bold">Weak Topics</h6>
-              <div class="d-flex flex-wrap gap-2">{% for keyword in result.weak_topics %}<span class="badge badge-warning-soft">{{ keyword }}</span>{% else %}<span class="text-muted">Well covered response.</span>{% endfor %}</div>
-            </div>
+
+          <div>
+            <span>Time remaining</span>
+            <strong id="countdown">05:00</strong>
           </div>
+
         </div>
-        {% else %}
-        <div class="text-center py-5 text-muted">Answer the question to get accuracy, keyword coverage, and feedback.</div>
-        {% endif %}
-        {% if latest_interview %}
-        <hr class="my-4">
-        <div class="d-flex justify-content-between">
-          <div><strong>Latest Score</strong><div class="text-muted">{{ latest_interview.score }}%</div></div>
-          <div><strong>Accuracy</strong><div class="text-muted">{{ latest_interview.accuracy }}%</div></div>
-          <div><a href="{{ url_for('student.analytics') }}" class="btn btn-outline-soft btn-sm">View Analytics</a></div>
+
+        <div class="timer-status">
+          <span></span>
+          Active
         </div>
-        {% endif %}
+
       </div>
-    </div>
+
+
+      {% if question %}
+
+      <!-- QUESTION -->
+      <div class="question-card">
+
+        <div class="question-top">
+
+          <div class="question-number">
+            <i class="bi bi-question-lg"></i>
+          </div>
+
+          <div>
+            <span class="question-label">
+              INTERVIEW QUESTION
+            </span>
+
+            <span class="question-type">
+              Randomly selected
+            </span>
+          </div>
+
+        </div>
+
+        <h3>
+          {{ question.question }}
+        </h3>
+
+      </div>
+
+
+      <!-- ANSWER FORM -->
+      <form
+        method="post"
+        data-loading-form
+        id="interviewForm"
+      >
+
+        <input
+          type="hidden"
+          name="question_id"
+          value="{{ question.id }}"
+        >
+
+        <input
+          type="hidden"
+          name="category"
+          value="{{ category }}"
+        >
+
+
+        <div class="answer-heading">
+
+          <div>
+            <label
+              class="form-label mb-1"
+              for="response_text"
+            >
+              Your Answer
+            </label>
+
+            <p>
+              Explain your answer clearly and include relevant examples
+              where possible.
+            </p>
+          </div>
+
+          <span class="answer-tip">
+            <i class="bi bi-lightbulb"></i>
+            Be specific
+          </span>
+
+        </div>
+
+
+        <div class="answer-wrapper">
+
+          <textarea
+            class="form-control answer-box"
+            name="response_text"
+            id="response_text"
+            rows="8"
+            placeholder="Start typing your answer here..."
+            required
+          ></textarea>
+
+          <div class="answer-footer">
+
+            <span>
+              <i class="bi bi-keyboard"></i>
+              Type your response
+            </span>
+
+            <span id="wordCount">
+              0 words
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="btn btn-primary-gradient submit-answer-btn"
+          type="submit"
+        >
+          <i class="bi bi-send me-2"></i>
+          Submit Answer
+        </button>
+
+      </form>
+
+      {% else %}
+
+      <div class="empty-question">
+        <div class="empty-question-icon">
+          <i class="bi bi-question-circle"></i>
+        </div>
+
+        <h3>No question available</h3>
+
+        <p>
+          There are currently no interview questions available
+          for this category.
+        </p>
+      </div>
+
+      {% endif %}
+
+    </section>
+
+
+    <!-- ===================================================
+         RIGHT - RESULTS
+    ==================================================== -->
+    <aside class="mock-results glass-card">
+
+      <div class="results-header">
+
+        <div>
+          <span class="section-eyebrow">
+            <i class="bi bi-bar-chart"></i>
+            PERFORMANCE
+          </span>
+
+          <h2>Interview Results</h2>
+        </div>
+
+        <div class="results-icon">
+          <i class="bi bi-graph-up-arrow"></i>
+        </div>
+
+      </div>
+
+
+      {% if result %}
+
+      <!-- SCORE -->
+      <div class="score-overview">
+
+        <div class="score-circle">
+
+          <div>
+            <strong>{{ result.score }}%</strong>
+            <span>Score</span>
+          </div>
+
+        </div>
+
+        <div class="score-description">
+
+          <span>Overall performance</span>
+
+          <strong>
+            {% if result.score >= 80 %}
+              Excellent performance
+            {% elif result.score >= 60 %}
+              Good performance
+            {% elif result.score >= 40 %}
+              Needs improvement
+            {% else %}
+              Keep practicing
+            {% endif %}
+          </strong>
+
+          <p>
+            Review your feedback below and focus on the weak topics
+            before your next attempt.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- METRICS -->
+      <div class="result-metrics">
+
+        <div class="result-metric">
+
+          <div class="metric-icon">
+            <i class="bi bi-bullseye"></i>
+          </div>
+
+          <div>
+            <span>Score</span>
+            <strong>{{ result.score }}%</strong>
+          </div>
+
+        </div>
+
+
+        <div class="result-metric">
+
+          <div class="metric-icon">
+            <i class="bi bi-check2-circle"></i>
+          </div>
+
+          <div>
+            <span>Coverage</span>
+            <strong>{{ result.coverage }}%</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- FEEDBACK -->
+      <div class="feedback-card">
+
+        <div class="feedback-heading">
+
+          <i class="bi bi-chat-left-quote"></i>
+
+          <div>
+            <span>AI FEEDBACK</span>
+            <strong>Response Evaluation</strong>
+          </div>
+
+        </div>
+
+        <p>
+          {{ result.feedback }}
+        </p>
+
+      </div>
+
+
+      <!-- KEYWORDS -->
+      <div class="result-section">
+
+        <div class="result-section-title">
+          <div>
+            <i class="bi bi-check-circle"></i>
+            <strong>Matched Keywords</strong>
+          </div>
+
+          <span>
+            {{ result.matched_keywords|length }}
+          </span>
+        </div>
+
+        <div class="keyword-list">
+
+          {% for keyword in result.matched_keywords %}
+
+          <span class="keyword success">
+            <i class="bi bi-check2"></i>
+            {{ keyword }}
+          </span>
+
+          {% else %}
+
+          <span class="no-result">
+            No strong keyword matches.
+          </span>
+
+          {% endfor %}
+
+        </div>
+
+      </div>
+
+
+      <!-- WEAK TOPICS -->
+      <div class="result-section">
+
+        <div class="result-section-title">
+          <div>
+            <i class="bi bi-exclamation-circle"></i>
+            <strong>Areas to Improve</strong>
+          </div>
+
+          <span>
+            {{ result.weak_topics|length }}
+          </span>
+        </div>
+
+        <div class="keyword-list">
+
+          {% for keyword in result.weak_topics %}
+
+          <span class="keyword warning">
+            <i class="bi bi-arrow-up-right"></i>
+            {{ keyword }}
+          </span>
+
+          {% else %}
+
+          <span class="no-result">
+            Well-covered response.
+          </span>
+
+          {% endfor %}
+
+        </div>
+
+      </div>
+
+
+      {% else %}
+
+      <!-- EMPTY RESULT -->
+      <div class="results-empty">
+
+        <div class="results-empty-icon">
+          <i class="bi bi-clipboard2-data"></i>
+        </div>
+
+        <h3>Your results will appear here</h3>
+
+        <p>
+          Submit your answer to receive your score, keyword coverage,
+          AI feedback, and improvement areas.
+        </p>
+
+        <div class="results-steps">
+
+          <div>
+            <span>01</span>
+            Answer the question
+          </div>
+
+          <div>
+            <span>02</span>
+            Submit your response
+          </div>
+
+          <div>
+            <span>03</span>
+            Review your feedback
+          </div>
+
+        </div>
+
+      </div>
+
+      {% endif %}
+
+
+      <!-- LATEST INTERVIEW -->
+      {% if latest_interview %}
+
+      <div class="latest-result">
+
+        <div class="latest-heading">
+          <div>
+            <span class="section-eyebrow">
+              LATEST ATTEMPT
+            </span>
+
+            <strong>Your previous performance</strong>
+          </div>
+
+          <a
+            href="{{ url_for('student.analytics') }}"
+            class="btn btn-outline-soft btn-sm"
+          >
+            Analytics
+            <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+        </div>
+
+        <div class="latest-stats">
+
+          <div>
+            <span>Score</span>
+            <strong>{{ latest_interview.score }}%</strong>
+          </div>
+
+          <div>
+            <span>Accuracy</span>
+            <strong>{{ latest_interview.accuracy }}%</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+      {% endif %}
+
+    </aside>
+
   </div>
+
 </div>
+
 {% endblock %}
+
+
 {% block scripts %}
+
 <script>
+
+  /* =====================================================
+     INTERVIEW TIMER
+  ====================================================== */
+
   let remaining = 300;
-  const timerElement = document.getElementById('countdown');
-  const timerId = setInterval(() => {
-    const minutes = String(Math.floor(remaining / 60)).padStart(2, '0');
-    const seconds = String(remaining % 60).padStart(2, '0');
-    timerElement.textContent = `${minutes}:${seconds}`;
-    if (remaining <= 0) {
-      clearInterval(timerId);
-      const answerBox = document.getElementById('response_text');
-      if (answerBox) answerBox.placeholder = 'Time is up. Review and submit your answer.';
-    }
-    remaining -= 1;
-  }, 1000);
+
+  const timerElement =
+    document.getElementById("countdown");
+
+  const timerStatus =
+    document.querySelector(".timer-status");
+
+  const answerBox =
+    document.getElementById("response_text");
+
+  if (timerElement) {
+
+    const timerId = setInterval(() => {
+
+      const minutes =
+        String(Math.floor(remaining / 60)).padStart(2, "0");
+
+      const seconds =
+        String(remaining % 60).padStart(2, "0");
+
+      timerElement.textContent =
+        `${minutes}:${seconds}`;
+
+
+      /* Warning state */
+      if (remaining <= 60) {
+
+        timerElement.classList.add("timer-warning");
+
+        if (timerStatus) {
+          timerStatus.classList.add("timer-warning-status");
+        }
+
+      }
+
+
+      /* Time finished */
+      if (remaining <= 0) {
+
+        clearInterval(timerId);
+
+        timerElement.textContent = "00:00";
+
+        if (timerStatus) {
+          timerStatus.innerHTML =
+            '<span></span> Time Up';
+
+          timerStatus.classList.add("timer-finished");
+        }
+
+        if (answerBox) {
+
+          answerBox.placeholder =
+            "Time is up. Review your answer and submit it.";
+
+        }
+
+        return;
+
+      }
+
+      remaining--;
+
+    }, 1000);
+
+  }
+
+
+  /* =====================================================
+     WORD COUNTER
+  ====================================================== */
+
+  if (answerBox) {
+
+    const wordCount =
+      document.getElementById("wordCount");
+
+    answerBox.addEventListener("input", function () {
+
+      const text =
+        this.value.trim();
+
+      const words =
+        text ? text.split(/\s+/).length : 0;
+
+      wordCount.textContent =
+        `${words} ${words === 1 ? "word" : "words"}`;
+
+    });
+
+  }
+
 </script>
+
 {% endblock %}
