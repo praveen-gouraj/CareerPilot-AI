@@ -1,35 +1,317 @@
 {% extends "base.html" %}
+
 {% block title %}Login{% endblock %}
+
 {% block page_title %}Login{% endblock %}
+
 {% block content %}
-<div class="container py-4">
-  <div class="auth-card row g-0">
-    <div class="col-lg-6 p-5 d-flex flex-column justify-content-center">
-      <span class="badge badge-soft mb-3">Welcome Back</span>
-      <h2 class="fw-bold mb-3">Access your career dashboard</h2>
-      <p class="text-muted mb-0">Sign in to continue career prediction, resume analysis, mock interviews, and analytics tracking.</p>
-    </div>
-    <div class="col-lg-6 p-5" style="background: rgba(255,255,255,0.02); border-left: 1px solid var(--border);">
-      <form method="post" data-loading-form>
-        <div class="mb-3">
-          <label class="form-label">Email</label>
-          <input type="email" name="email" class="form-control form-control-lg" required>
+
+<div class="auth-page">
+
+  <div class="container">
+
+    <div class="auth-wrapper">
+
+      <div class="auth-card auth-card-modern">
+
+        <!-- LEFT SIDE -->
+        <div class="auth-intro">
+
+          <div class="auth-brand-mark">
+            <i class="bi bi-graph-up-arrow"></i>
+          </div>
+
+          <span class="badge badge-soft auth-badge">
+            <i class="bi bi-shield-check me-1"></i>
+            Welcome Back
+          </span>
+
+          <h1>
+            Continue building
+            <span class="gradient-text">your career.</span>
+          </h1>
+
+          <p>
+            Sign in to access your personalized career dashboard,
+            skill analysis, resume insights, mock interviews,
+            and placement analytics.
+          </p>
+
+          <div class="auth-benefits">
+
+            <div class="auth-benefit">
+              <div class="auth-benefit-icon">
+                <i class="bi bi-stars"></i>
+              </div>
+              <div>
+                <strong>AI Career Guidance</strong>
+                <span>Discover suitable career paths.</span>
+              </div>
+            </div>
+
+            <div class="auth-benefit">
+              <div class="auth-benefit-icon">
+                <i class="bi bi-file-earmark-person"></i>
+              </div>
+              <div>
+                <strong>Resume Analysis</strong>
+                <span>Improve your resume with NLP insights.</span>
+              </div>
+            </div>
+
+            <div class="auth-benefit">
+              <div class="auth-benefit-icon">
+                <i class="bi bi-chat-square-text"></i>
+              </div>
+              <div>
+                <strong>Interview Preparation</strong>
+                <span>Practice technical and HR interviews.</span>
+              </div>
+            </div>
+
+          </div>
+
         </div>
-        <div class="mb-3">
-          <label class="form-label">Password</label>
-          <input type="password" name="password" class="form-control form-control-lg" required>
+
+
+        <!-- RIGHT SIDE -->
+        <div class="auth-form-panel">
+
+          <div class="auth-form-header">
+
+            <div class="auth-mobile-icon">
+              <i class="bi bi-person-lock"></i>
+            </div>
+
+            <h2>Sign in to your account</h2>
+
+            <p>
+              Enter your credentials to continue.
+            </p>
+
+          </div>
+
+
+          <form method="post" data-loading-form>
+
+            <!-- EMAIL -->
+
+            <div class="auth-field mb-3">
+
+              <label for="loginEmail" class="form-label">
+                Email address
+              </label>
+
+              <div class="auth-input-wrapper">
+
+                <i class="bi bi-envelope auth-input-icon"></i>
+
+                <input
+                  type="email"
+                  id="loginEmail"
+                  name="email"
+                  class="form-control auth-input"
+                  placeholder="you@example.com"
+                  autocomplete="email"
+                  required
+                >
+
+              </div>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="auth-field mb-3">
+
+              <div class="d-flex justify-content-between align-items-center">
+
+                <label for="loginPassword" class="form-label mb-2">
+                  Password
+                </label>
+
+                <a
+                  href="{{ url_for('main.contact') }}"
+                  class="auth-help-link"
+                >
+                  Need help?
+                </a>
+
+              </div>
+
+              <div class="auth-input-wrapper">
+
+                <i class="bi bi-lock auth-input-icon"></i>
+
+                <input
+                  type="password"
+                  id="loginPassword"
+                  name="password"
+                  class="form-control auth-input auth-password-input"
+                  placeholder="Enter your password"
+                  autocomplete="current-password"
+                  required
+                >
+
+                <button
+                  type="button"
+                  class="auth-password-toggle"
+                  data-password-toggle="loginPassword"
+                  aria-label="Show password"
+                >
+                  <i class="bi bi-eye"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <!-- REMEMBER -->
+
+            <div class="auth-options mb-4">
+
+              <label class="auth-check">
+
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="remember"
+                >
+
+                <span>
+                  Remember me
+                </span>
+
+              </label>
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+              class="btn btn-primary-gradient auth-submit"
+              type="submit"
+            >
+
+              <span>
+                <i class="bi bi-box-arrow-in-right me-2"></i>
+                Sign In
+              </span>
+
+            </button>
+
+          </form>
+
+
+          <!-- REGISTER -->
+
+          <div class="auth-divider">
+            <span>or</span>
+          </div>
+
+          <div class="auth-register">
+
+            <span>
+              Don't have an account?
+            </span>
+
+            <a href="{{ url_for('auth.register') }}">
+              Create an account
+              <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+
+          </div>
+
+
+          <!-- DEMO ACCOUNT -->
+
+          <div class="auth-demo">
+
+            <div class="auth-demo-icon">
+              <i class="bi bi-info-circle"></i>
+            </div>
+
+            <div>
+
+              <strong>Demo administrator account</strong>
+
+              <span>
+                admin@careerplatform.com
+              </span>
+
+              <span>
+                Password: Admin@123
+              </span>
+
+            </div>
+
+          </div>
+
         </div>
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="remember"> Remember me</label>
-          <a href="{{ url_for('main.contact') }}" class="small text-decoration-none text-info">Need help?</a>
-        </div>
-        <button class="btn btn-primary-gradient w-100 btn-lg" type="submit">Login</button>
-      </form>
-      <div class="text-center mt-3">
-        <span class="text-muted">Don't have an account?</span> <a href="{{ url_for('auth.register') }}">Register</a>
+
       </div>
-      <div class="small text-muted mt-4">Admin demo account: admin@careerplatform.com / Admin@123</div>
+
     </div>
+
   </div>
+
 </div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const toggleButtons = document.querySelectorAll(
+    "[data-password-toggle]"
+  );
+
+  toggleButtons.forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+      const inputId = button.getAttribute(
+        "data-password-toggle"
+      );
+
+      const input = document.getElementById(inputId);
+      const icon = button.querySelector("i");
+
+      if (!input) return;
+
+      if (input.type === "password") {
+
+        input.type = "text";
+
+        icon.classList.remove("bi-eye");
+        icon.classList.add("bi-eye-slash");
+
+        button.setAttribute(
+          "aria-label",
+          "Hide password"
+        );
+
+      } else {
+
+        input.type = "password";
+
+        icon.classList.remove("bi-eye-slash");
+        icon.classList.add("bi-eye");
+
+        button.setAttribute(
+          "aria-label",
+          "Show password"
+        );
+
+      }
+
+    });
+
+  });
+
+});
+</script>
+
 {% endblock %}

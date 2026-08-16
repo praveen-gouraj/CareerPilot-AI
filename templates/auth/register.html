@@ -1,56 +1,336 @@
 {% extends "base.html" %}
+
 {% block title %}Register{% endblock %}
 {% block page_title %}Register{% endblock %}
+
 {% block content %}
-<div class="container py-4">
-  <div class="auth-card row g-0">
-    <div class="col-lg-5 p-5 d-flex flex-column justify-content-center">
-      <span class="badge badge-soft mb-3">Student Registration</span>
-      <h2 class="fw-bold mb-3">Start your placement journey</h2>
-      <p class="text-muted mb-0">Create your profile, enter your academic details, and begin building your AI-guided career plan.</p>
-    </div>
-    <div class="col-lg-7 p-5" style="background: rgba(255,255,255,0.02); border-left: 1px solid var(--border);">
-      <form method="post" data-loading-form>
-        <div class="row g-3">
-          <div class="col-md-6">
-            <label class="form-label">Full Name</label>
-            <input type="text" name="full_name" class="form-control" required>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" required>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" required>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">College</label>
-            <input type="text" name="college" class="form-control">
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Course</label>
-            <input type="text" name="course" class="form-control">
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Year</label>
-            <input type="text" name="year" class="form-control" placeholder="3rd Year">
-          </div>
-          <div class="col-12">
-            <label class="form-label">Skills (comma separated)</label>
-            <input type="text" name="skills" class="form-control" placeholder="Python, SQL, Communication, Problem Solving">
-          </div>
-          <div class="col-12">
-            <label class="form-label">Bio</label>
-            <textarea name="bio" class="form-control" rows="3"></textarea>
-          </div>
+
+<div class="register-page">
+
+  <div class="container">
+
+    <div class="register-card">
+
+      <!-- LEFT SIDE -->
+      <section class="register-intro">
+
+        <div class="brand-mark">
+          <i class="bi bi-person-plus"></i>
         </div>
-        <button class="btn btn-primary-gradient w-100 btn-lg mt-4" type="submit">Create Account</button>
-      </form>
-      <div class="text-center mt-3">
-        <span class="text-muted">Already registered?</span> <a href="{{ url_for('auth.login') }}">Login</a>
-      </div>
+
+        <span class="badge badge-soft">
+          <i class="bi bi-stars me-1"></i>
+          Student Registration
+        </span>
+
+        <h2>
+          Start building
+          <span class="gradient-text">your career.</span>
+        </h2>
+
+        <p>
+          Create your student profile and get personalized career
+          recommendations, skill analysis, resume insights,
+          interview preparation, and placement guidance.
+        </p>
+
+        <div class="auth-benefits">
+
+          <div class="auth-benefit">
+            <div class="icon">
+              <i class="bi bi-stars"></i>
+            </div>
+
+            <div>
+              <strong>AI Career Guidance</strong>
+              <span>Discover career paths based on your skills.</span>
+            </div>
+          </div>
+
+          <div class="auth-benefit">
+            <div class="icon">
+              <i class="bi bi-diagram-3"></i>
+            </div>
+
+            <div>
+              <strong>Skill Gap Analysis</strong>
+              <span>Identify skills you need to improve.</span>
+            </div>
+          </div>
+
+          <div class="auth-benefit">
+            <div class="icon">
+              <i class="bi bi-file-earmark-person"></i>
+            </div>
+
+            <div>
+              <strong>Resume & Interview Support</strong>
+              <span>Improve your placement readiness.</span>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- RIGHT SIDE -->
+      <section class="register-form-panel">
+
+        <div class="auth-form-header">
+
+          <h2>Create your account</h2>
+
+          <p>
+            Enter your details to start your placement journey.
+          </p>
+
+        </div>
+
+
+        <form method="post" data-loading-form>
+
+          <div class="row">
+
+            <!-- FULL NAME -->
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Full Name
+              </label>
+
+              <input
+                type="text"
+                name="full_name"
+                class="form-control"
+                placeholder="Enter your full name"
+                required
+              >
+
+            </div>
+
+
+            <!-- EMAIL -->
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Email Address
+              </label>
+
+              <input
+                type="email"
+                name="email"
+                class="form-control"
+                placeholder="you@example.com"
+                required
+              >
+
+            </div>
+
+
+            <!-- PASSWORD -->
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Password
+              </label>
+
+              <div class="position-relative">
+
+                <input
+                  type="password"
+                  name="password"
+                  id="registerPassword"
+                  class="form-control"
+                  placeholder="Create a password"
+                  required
+                >
+
+                <button
+                  type="button"
+                  class="password-toggle"
+                  onclick="toggleRegisterPassword()"
+                  aria-label="Show password"
+                >
+                  <i class="bi bi-eye" id="registerPasswordIcon"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <!-- COLLEGE -->
+            <div class="col-md-6">
+
+              <label class="form-label">
+                College
+              </label>
+
+              <input
+                type="text"
+                name="college"
+                class="form-control"
+                placeholder="College / University"
+              >
+
+            </div>
+
+
+            <!-- COURSE -->
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Course
+              </label>
+
+              <input
+                type="text"
+                name="course"
+                class="form-control"
+                placeholder="e.g. B.E. Computer Science"
+              >
+
+            </div>
+
+
+            <!-- YEAR -->
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Year
+              </label>
+
+              <select
+                name="year"
+                class="form-select"
+              >
+
+                <option value="" selected disabled>
+                  Select year
+                </option>
+
+                <option value="1st Year">
+                  1st Year
+                </option>
+
+                <option value="2nd Year">
+                  2nd Year
+                </option>
+
+                <option value="3rd Year">
+                  3rd Year
+                </option>
+
+                <option value="4th Year">
+                  4th Year
+                </option>
+
+                <option value="Final Year">
+                  Final Year
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- SKILLS -->
+            <div class="col-12">
+
+              <label class="form-label">
+                Skills
+                <span class="text-muted">(comma separated)</span>
+              </label>
+
+              <input
+                type="text"
+                name="skills"
+                class="form-control"
+                placeholder="Python, Java, SQL, Communication, Problem Solving"
+              >
+
+            </div>
+
+
+            <!-- BIO -->
+            <div class="col-12">
+
+              <label class="form-label">
+                Short Bio
+              </label>
+
+              <textarea
+                name="bio"
+                class="form-control register-bio"
+                placeholder="Tell us briefly about your interests and career goals..."
+                rows="2"
+              ></textarea>
+
+            </div>
+
+          </div>
+
+
+          <!-- SUBMIT -->
+          <button
+            class="btn btn-primary-gradient w-100 register-submit"
+            type="submit"
+          >
+            <i class="bi bi-person-plus me-2"></i>
+            Create Account
+          </button>
+
+        </form>
+
+
+        <!-- LOGIN LINK -->
+        <div class="auth-register">
+
+          Already have an account?
+
+          <a
+            href="{{ url_for('auth.login') }}"
+            class="fw-semibold text-decoration-none"
+          >
+            Sign in
+            <i class="bi bi-arrow-right"></i>
+          </a>
+
+        </div>
+
+      </section>
+
     </div>
+
   </div>
+
 </div>
+
+
+<script>
+function toggleRegisterPassword() {
+
+  const password = document.getElementById("registerPassword");
+  const icon = document.getElementById("registerPasswordIcon");
+
+  if (password.type === "password") {
+
+    password.type = "text";
+
+    icon.classList.remove("bi-eye");
+    icon.classList.add("bi-eye-slash");
+
+  } else {
+
+    password.type = "password";
+
+    icon.classList.remove("bi-eye-slash");
+    icon.classList.add("bi-eye");
+
+  }
+
+}
+</script>
+
 {% endblock %}
