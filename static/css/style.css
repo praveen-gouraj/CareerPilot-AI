@@ -6284,3 +6284,188 @@ body.public-shell .hero {
 
 }
 
+/* =========================================================
+   RANKINGS TABLE
+   ========================================================= */
+
+.rankings-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+}
+
+.rankings-table {
+    width: 100%;
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+/* Header */
+
+.rankings-table thead th {
+    padding: 16px 18px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    background: rgba(99, 102, 241, 0.10);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+/* Body */
+
+.rankings-table tbody td {
+    padding: 17px 18px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+    background: transparent;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+.rankings-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Hover */
+
+.rankings-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.rankings-table tbody tr:hover {
+    background: rgba(99, 102, 241, 0.07);
+}
+
+/* Student */
+
+.rankings-table .student-name {
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* Career */
+
+.rankings-table .career-name {
+    color: var(--text-muted);
+}
+
+/* Scores */
+
+.rankings-table .score {
+    font-weight: 700;
+    color: #93c5fd;
+}
+
+/* Rank */
+
+.rank-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 44px;
+    height: 34px;
+
+    padding: 0 11px;
+
+    border-radius: 999px;
+
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.30);
+
+    color: #93c5fd;
+
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+/* Empty state */
+
+.no-ranking-data {
+    text-align: center;
+    padding: 40px 20px !important;
+    color: var(--text-muted) !important;
+}
+
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+[data-theme="dark"] .rankings-table,
+[data-theme="dark"] .rankings-table thead,
+[data-theme="dark"] .rankings-table tbody,
+[data-theme="dark"] .rankings-table tr {
+    background: transparent !important;
+}
+
+[data-theme="dark"] .rankings-table thead th {
+    background: rgba(99, 102, 241, 0.14) !important;
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .rankings-table tbody td {
+    background: transparent !important;
+    color: #e2e8f0 !important;
+    border-color: rgba(148, 163, 184, 0.15) !important;
+}
+
+[data-theme="dark"] .rankings-table tbody tr:hover {
+    background: rgba(99, 102, 241, 0.08) !important;
+}
+
+[data-theme="dark"] .rankings-table .student-name {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .rankings-table .career-name {
+    color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .rankings-table .score {
+    color: #93c5fd !important;
+}
+
+
+/* =========================================================
+   LIGHT MODE
+   ========================================================= */
+
+[data-theme="light"] .rankings-table thead th {
+    background: #f1f5ff;
+    color: #172554;
+}
+
+[data-theme="light"] .rankings-table tbody td {
+    background: #ffffff;
+    color: #1e293b;
+}
+
+[data-theme="light"] .rankings-table tbody tr:hover {
+    background: #f8faff;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .rankings-table thead th,
+    .rankings-table tbody td {
+        padding: 13px 12px;
+        font-size: 0.85rem;
+    }
+
+    .rank-badge {
+        min-width: 38px;
+        height: 30px;
+        font-size: 0.78rem;
+    }
+
+}

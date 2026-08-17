@@ -1,38 +1,101 @@
 {% extends "base.html" %}
+
 {% block title %}Rankings{% endblock %}
 {% block page_title %}Student Rankings{% endblock %}
+
 {% block content %}
+
 <div class="container py-4">
-  <div class="glass-card">
-    <div class="d-flex justify-content-between align-items-center mb-3">
+
+  <div class="glass-card rankings-card">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
       <div>
         <h4 class="fw-bold mb-1">Placement Leaderboard</h4>
-        <div class="text-muted small">Ranked by placement readiness score across predictions, resume, skill, and interview performance.</div>
+
+        <div class="text-muted small">
+          Ranked by placement readiness score across predictions,
+          resume, skill, and interview performance.
+        </div>
       </div>
-      <span class="badge badge-soft">Live Rankings</span>
+
+      <span class="badge badge-soft">
+        Live Rankings
+      </span>
     </div>
-    <div class="table-responsive">
-      <table class="table align-middle">
+
+    <div class="table-responsive rankings-table-wrapper">
+
+      <table class="table align-middle rankings-table">
+
         <thead>
-          <tr><th>Rank</th><th>Student</th><th>Career</th><th>Readiness</th><th>Resume</th><th>Interview</th><th>Skill Gap</th></tr>
-        </thead>
-        <tbody>
-          {% for item in rankings %}
           <tr>
-            <td><span class="badge badge-soft">#{{ item.rank }}</span></td>
-            <td>{{ item.user.full_name }}</td>
-            <td>{{ item.career }}</td>
-            <td>{{ item.readiness }}%</td>
-            <td>{{ item.resume_score }}%</td>
-            <td>{{ item.interview_score }}%</td>
-            <td>{{ item.skill_score }}%</td>
+            <th>Rank</th>
+            <th>Student</th>
+            <th>Career</th>
+            <th>Readiness</th>
+            <th>Resume</th>
+            <th>Interview</th>
+            <th>Skill Gap</th>
           </tr>
+        </thead>
+
+        <tbody>
+
+          {% for item in rankings %}
+
+          <tr>
+
+            <td>
+              <span class="rank-badge">
+                #{{ item.rank }}
+              </span>
+            </td>
+
+            <td class="student-name">
+              {{ item.user.full_name }}
+            </td>
+
+            <td class="career-name">
+              {{ item.career }}
+            </td>
+
+            <td class="score">
+              {{ item.readiness }}%
+            </td>
+
+            <td class="score">
+              {{ item.resume_score }}%
+            </td>
+
+            <td class="score">
+              {{ item.interview_score }}%
+            </td>
+
+            <td class="score">
+              {{ item.skill_score }}%
+            </td>
+
+          </tr>
+
           {% else %}
-          <tr><td colspan="7" class="text-muted">No ranking data yet.</td></tr>
+
+          <tr>
+            <td colspan="7" class="no-ranking-data">
+              No ranking data yet.
+            </td>
+          </tr>
+
           {% endfor %}
+
         </tbody>
+
       </table>
+
     </div>
+
   </div>
+
 </div>
+
 {% endblock %}
