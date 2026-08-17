@@ -1,34 +1,368 @@
 {% extends "base.html" %}
+
 {% block title %}Profile Settings{% endblock %}
 {% block page_title %}Profile Settings{% endblock %}
+
 {% block content %}
-<div class="container py-4">
-  <div class="row g-4 align-items-start">
-    <div class="col-lg-4">
-      <div class="glass-card text-center">
-        <img src="{{ url_for('static', filename='uploads/' ~ current_user.photo) }}" class="avatar-lg mb-3" alt="Profile photo">
-        <h4 class="fw-bold">{{ current_user.full_name }}</h4>
-        <p class="text-muted mb-0">{{ current_user.email }}</p>
-        <div class="mt-3"><span class="badge badge-soft text-capitalize">{{ current_user.role }}</span></div>
+
+<div class="container py-4 profile-page">
+
+  <!-- Profile Header -->
+  <div class="profile-hero glass-card mb-4">
+    <div class="profile-hero-content">
+
+      <div class="profile-avatar-wrapper">
+        <img
+          src="{{ url_for('static', filename='uploads/' ~ current_user.photo) }}"
+          class="profile-avatar"
+          alt="Profile photo"
+        >
+
+        <div class="profile-avatar-status"></div>
       </div>
+
+      <div class="profile-identity">
+        <div class="profile-role">
+          {{ current_user.role|capitalize }}
+        </div>
+
+        <h2>{{ current_user.full_name }}</h2>
+
+        <p>
+          {{ current_user.email }}
+        </p>
+
+        {% if current_user.course %}
+        <span class="profile-meta">
+          {{ current_user.course }}
+          {% if current_user.year %}
+            · {{ current_user.year }}
+          {% endif %}
+        </span>
+        {% endif %}
+      </div>
+
     </div>
-    <div class="col-lg-8">
-      <div class="glass-card">
-        <form method="post" enctype="multipart/form-data" data-loading-form>
-          <div class="row g-3">
-            <div class="col-md-6"><label class="form-label">Full Name</label><input class="form-control" name="full_name" value="{{ current_user.full_name }}"></div>
-            <div class="col-md-6"><label class="form-label">College</label><input class="form-control" name="college" value="{{ current_user.college or '' }}"></div>
-            <div class="col-md-6"><label class="form-label">Course</label><input class="form-control" name="course" value="{{ current_user.course or '' }}"></div>
-            <div class="col-md-6"><label class="form-label">Year</label><input class="form-control" name="year" value="{{ current_user.year or '' }}"></div>
-            <div class="col-12"><label class="form-label">Skills</label><input class="form-control" name="skills" value="{{ profile_skills }}"></div>
-            <div class="col-12"><label class="form-label">Bio</label><textarea class="form-control" name="bio" rows="4">{{ current_user.bio or '' }}</textarea></div>
-            <div class="col-12"><label class="form-label">New Password</label><input type="password" class="form-control" name="password" placeholder="Leave blank to keep current password"></div>
-            <div class="col-12"><label class="form-label">Profile Picture</label><input type="file" class="form-control" name="photo" accept="image/*"></div>
-          </div>
-          <button class="btn btn-primary-gradient mt-4">Save Changes</button>
-        </form>
-      </div>
+
+    <div class="profile-header-badge">
+      <span class="profile-badge-dot"></span>
+      Profile Active
     </div>
   </div>
+
+
+  <form method="post"
+        enctype="multipart/form-data"
+        data-loading-form>
+
+    <div class="row g-4 align-items-start">
+
+      <!-- LEFT COLUMN -->
+      <div class="col-lg-8">
+
+        <!-- Personal Information -->
+        <div class="glass-card profile-section mb-4">
+
+          <div class="section-heading">
+            <div class="section-icon">
+              <i class="fa-regular fa-user"></i>
+            </div>
+
+            <div>
+              <h4>Personal Information</h4>
+              <p>Update your basic profile information.</p>
+            </div>
+          </div>
+
+          <div class="row g-3">
+
+            <div class="col-md-6">
+              <label class="form-label">Full Name</label>
+
+              <input
+                type="text"
+                class="form-control"
+                name="full_name"
+                value="{{ current_user.full_name }}"
+                placeholder="Enter your full name"
+              >
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Email Address</label>
+
+              <input
+                type="email"
+                class="form-control"
+                value="{{ current_user.email }}"
+                disabled
+              >
+
+              <div class="field-help">
+                Email address cannot be changed here.
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Academic Information -->
+        <div class="glass-card profile-section mb-4">
+
+          <div class="section-heading">
+            <div class="section-icon">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+
+            <div>
+              <h4>Academic Information</h4>
+              <p>Keep your academic profile up to date.</p>
+            </div>
+          </div>
+
+          <div class="row g-3">
+
+            <div class="col-md-6">
+              <label class="form-label">College / University</label>
+
+              <input
+                type="text"
+                class="form-control"
+                name="college"
+                value="{{ current_user.college or '' }}"
+                placeholder="Enter your college"
+              >
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Course</label>
+
+              <input
+                type="text"
+                class="form-control"
+                name="course"
+                value="{{ current_user.course or '' }}"
+                placeholder="e.g. B.E. Computer Science"
+              >
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Academic Year</label>
+
+              <input
+                type="text"
+                class="form-control"
+                name="year"
+                value="{{ current_user.year or '' }}"
+                placeholder="e.g. 4th Year"
+              >
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Skills & Bio -->
+        <div class="glass-card profile-section mb-4">
+
+          <div class="section-heading">
+            <div class="section-icon">
+              <i class="fa-solid fa-code"></i>
+            </div>
+
+            <div>
+              <h4>Skills & About You</h4>
+              <p>Help CareerPilot understand your profile and career interests.</p>
+            </div>
+          </div>
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Technical & Professional Skills
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="skills"
+              value="{{ profile_skills }}"
+              placeholder="Java, Python, React, SQL, Communication..."
+            >
+
+            <div class="field-help">
+              Separate multiple skills with commas.
+            </div>
+
+          </div>
+
+          <div>
+
+            <label class="form-label">
+              Short Bio
+            </label>
+
+            <textarea
+              class="form-control profile-bio"
+              name="bio"
+              rows="5"
+              placeholder="Tell us about your interests, strengths and career goals..."
+            >{{ current_user.bio or '' }}</textarea>
+
+          </div>
+
+        </div>
+
+
+        <!-- Profile Picture -->
+        <div class="glass-card profile-section mb-4">
+
+          <div class="section-heading">
+            <div class="section-icon">
+              <i class="fa-regular fa-image"></i>
+            </div>
+
+            <div>
+              <h4>Profile Picture</h4>
+              <p>Choose a professional profile image.</p>
+            </div>
+          </div>
+
+          <div class="profile-upload">
+
+            <div class="upload-preview">
+              <img
+                src="{{ url_for('static', filename='uploads/' ~ current_user.photo) }}"
+                alt="Current profile photo"
+              >
+            </div>
+
+            <div class="upload-content">
+
+              <strong>Update your profile picture</strong>
+
+              <span>
+                JPG, PNG or WebP. Use a clear professional image.
+              </span>
+
+              <label class="upload-button">
+                <i class="fa-solid fa-upload"></i>
+                Choose Image
+
+                <input
+                  type="file"
+                  name="photo"
+                  accept="image/*"
+                  hidden
+                >
+              </label>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- RIGHT COLUMN -->
+      <div class="col-lg-4">
+
+        <!-- Account Summary -->
+        <div class="glass-card profile-sidebar-card mb-4">
+
+          <div class="sidebar-title">
+            <i class="fa-solid fa-circle-info"></i>
+            Account Overview
+          </div>
+
+          <div class="account-item">
+            <span>Account Type</span>
+            <strong class="account-role">
+              {{ current_user.role|capitalize }}
+            </strong>
+          </div>
+
+          <div class="account-item">
+            <span>Email</span>
+            <strong>{{ current_user.email }}</strong>
+          </div>
+
+          {% if current_user.college %}
+          <div class="account-item">
+            <span>College</span>
+            <strong>{{ current_user.college }}</strong>
+          </div>
+          {% endif %}
+
+          {% if current_user.course %}
+          <div class="account-item">
+            <span>Course</span>
+            <strong>{{ current_user.course }}</strong>
+          </div>
+          {% endif %}
+
+        </div>
+
+
+        <!-- Security -->
+        <div class="glass-card profile-sidebar-card mb-4">
+
+          <div class="sidebar-title">
+            <i class="fa-solid fa-shield-halved"></i>
+            Account Security
+          </div>
+
+          <p class="security-text">
+            Change your password regularly to keep your account secure.
+          </p>
+
+          <label class="form-label">
+            New Password
+          </label>
+
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            placeholder="Enter new password"
+          >
+
+          <div class="field-help">
+            Leave blank to keep your current password.
+          </div>
+
+        </div>
+
+
+        <!-- Save -->
+        <div class="profile-save-card">
+
+          <div>
+            <strong>Ready to save?</strong>
+            <span>Your profile changes will be updated immediately.</span>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary-gradient profile-save-btn"
+          >
+            <i class="fa-solid fa-check"></i>
+            Save Changes
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </form>
+
 </div>
+
 {% endblock %}
