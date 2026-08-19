@@ -6961,3 +6961,24 @@ body.public-shell .hero {
     }
 
 }
+
+/* Dark mode - select dropdown */
+[data-theme="dark"] select,
+[data-theme="dark"] .form-select {
+    background-color: #111827 !important;
+    color: #f8fafc !important;
+    border-color: #26334d !important;
+}
+
+[data-theme="dark"] select option,
+[data-theme="dark"] .form-select option {
+    background-color: #111827 !important;
+    color: #f8fafc !important;
+}
+
+/* Selected option */
+[data-theme="dark"] select option:checked,
+[data-theme="dark"] .form-select option:checked {
+    background-color: #4f46e5 !important;
+    color: #ffffff !important;
+}
