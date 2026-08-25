@@ -38,6 +38,8 @@
 
 html, body {
   min-height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -71,6 +73,8 @@ body[data-theme="light"] {
 .app-shell {
   display: flex;
   min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
 }
 
 .sidebar {
@@ -88,6 +92,77 @@ body[data-theme="light"] {
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+.mobile-menu-toggle,
+.mobile-close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.mobile-menu-toggle:hover,
+.mobile-close-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(82vw, 320px);
+  background: linear-gradient(180deg, rgba(10, 18, 35, 0.98), rgba(7, 13, 28, 1));
+  border-right: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 20px 16px;
+  z-index: 1060;
+  transform: translateX(-105%);
+  transition: transform 0.25s ease;
+  overflow-y: auto;
+}
+
+[data-theme="light"] .mobile-sidebar {
+  background: linear-gradient(180deg, #ffffff, #f5f8ff);
+}
+
+.mobile-sidebar.open {
+  transform: translateX(0);
+}
+
+.mobile-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.mobile-nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 8, 16, 0.62);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  z-index: 1055;
+}
+
+.mobile-nav-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+body.mobile-menu-open {
+  overflow: hidden;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -187,6 +262,9 @@ body[data-theme="light"] {
 .main-content {
   flex: 1;
   padding: 22px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .topbar {
@@ -515,6 +593,8 @@ textarea::placeholder {
 @media (max-width: 991px) {
   .app-shell {
     display: block;
+    width: 100%;
+    max-width: 100%;
   }
 
   .sidebar {
@@ -527,6 +607,27 @@ textarea::placeholder {
 
   .main-content {
     padding: 16px;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .topbar {
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .topbar > div:first-child {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mobile-menu-toggle {
+    display: inline-flex;
+  }
+
+  .mobile-sidebar {
+    display: block;
   }
 
   #assistantWidget {
@@ -6981,4 +7082,289 @@ body.public-shell .hero {
 [data-theme="dark"] .form-select option:checked {
     background-color: #4f46e5 !important;
     color: #ffffff !important;
+}
+
+/* =========================================================
+   ADMIN PANEL - DARK THEME FIX
+   ========================================================= */
+
+/* ---------- Bootstrap table fix ---------- */
+
+[data-theme="dark"] .table {
+    --bs-table-bg: transparent !important;
+    --bs-table-color: var(--text) !important;
+    --bs-table-border-color: var(--border) !important;
+    color: var(--text) !important;
+    background: transparent !important;
+}
+
+[data-theme="dark"] .table > :not(caption) > * > * {
+    background-color: transparent !important;
+    color: var(--text) !important;
+    border-color: var(--border) !important;
+}
+
+[data-theme="dark"] .table thead th {
+    background: rgba(99, 102, 241, 0.12) !important;
+    color: #f8fafc !important;
+    border-color: var(--border) !important;
+}
+
+[data-theme="dark"] .table tbody td {
+    background: transparent !important;
+    color: #e8eefc !important;
+    border-color: var(--border) !important;
+}
+
+[data-theme="dark"] .table tbody tr:hover td {
+    background: rgba(99, 102, 241, 0.07) !important;
+}
+
+
+/* ---------- Admin cards ---------- */
+
+[data-theme="dark"] .admin-card,
+[data-theme="dark"] .admin-panel,
+[data-theme="dark"] .admin-section {
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    border-color: var(--border) !important;
+}
+
+
+/* ---------- Search / input areas ---------- */
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+    background: rgba(255, 255, 255, 0.04) !important;
+    color: var(--text) !important;
+    border-color: var(--border) !important;
+}
+
+[data-theme="dark"] .form-control::placeholder {
+    color: #7f8da8 !important;
+}
+
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus {
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: #ffffff !important;
+    border-color: rgba(79, 140, 255, 0.6) !important;
+    box-shadow: 0 0 0 3px rgba(79, 140, 255, 0.10) !important;
+}
+
+
+/* ---------- Admin headings ---------- */
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+    color: var(--text);
+}
+
+
+/* ---------- Admin responsive tables ---------- */
+
+.admin-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.admin-table-wrapper table {
+    min-width: 700px;
+}
+
+
+/* ---------- Mobile admin layout ---------- */
+
+@media (max-width: 991px) {
+
+    .main-content {
+        width: 100%;
+        max-width: 100%;
+        padding: 12px;
+        overflow-x: hidden;
+    }
+
+    .topbar {
+        width: 100%;
+        margin-bottom: 14px !important;
+        padding: 12px 14px;
+        border-radius: 18px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+    }
+
+    .widget-grid,
+    .card-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px;
+    }
+
+    .stat-card,
+    .metric-card,
+    .widget-card,
+    .panel-card,
+    .glass-card {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .admin-table-wrapper {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+}
+
+
+/* ---------- Small phones ---------- */
+
+@media (max-width: 576px) {
+
+    .main-content {
+        padding: 10px;
+    }
+
+    .topbar {
+        padding: 11px 12px;
+        border-radius: 16px;
+    }
+
+    .topbar h5 {
+        font-size: 1rem;
+    }
+
+    .topbar .small {
+        font-size: 0.65rem;
+    }
+
+    .stat-card,
+    .metric-card {
+        padding: 16px !important;
+        border-radius: 18px;
+    }
+
+    .stat-value {
+        font-size: 1.7rem;
+    }
+
+    .stat-label {
+        font-size: 0.82rem;
+    }
+
+    .table {
+        font-size: 0.82rem;
+    }
+}
+
+/* =========================================================
+   FIXED DESKTOP SIDEBAR + INDEPENDENT PAGE SCROLL
+   ========================================================= */
+
+@media (min-width: 992px) {
+
+    /* Keep the sidebar fixed while the page scrolls */
+    body.app-shell {
+        display: block;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    .app-shell .sidebar {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+
+        width: 280px;
+        height: 100vh;
+
+        z-index: 1100;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        flex: none;
+
+        /* Keep sidebar at the top */
+        transform: none !important;
+    }
+
+    /* Main page gets the space previously occupied by sidebar */
+    .app-shell .main-content {
+        margin-left: 280px;
+
+        width: calc(100% - 280px);
+        min-width: 0;
+        min-height: 100vh;
+
+        padding: 24px;
+    }
+
+    /* Prevent dashboard grids from stretching unnecessarily */
+    .app-shell .row {
+        align-items: flex-start;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    body.app-shell {
+        display: block;
+        overflow-x: hidden;
+    }
+
+    .app-shell .main-content {
+        width: 100%;
+        margin-left: 0;
+        min-width: 0;
+        padding: 16px;
+    }
+
+    /* Desktop sidebar must never appear on mobile */
+    .app-shell .sidebar {
+        display: none !important;
+    }
+
+    /* Mobile navigation handles navigation */
+    .mobile-sidebar {
+        z-index: 1200;
+    }
+
+    .mobile-nav-overlay {
+        z-index: 1190;
+    }
+}
+
+
+/* =========================================================
+   ADMIN DASHBOARD - PREVENT UNEVEN GRID STRETCHING
+   ========================================================= */
+
+@media (min-width: 992px) {
+
+    .admin-dashboard .row {
+        align-items: flex-start !important;
+    }
+
+    .admin-dashboard [class*="col-"] {
+        align-self: flex-start;
+    }
+
+    .admin-dashboard .glass-card,
+    .admin-dashboard .card {
+        height: auto;
+    }
 }

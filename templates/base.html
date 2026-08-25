@@ -44,10 +44,54 @@
       <a class="nav-link sidebar-link" href="{{ url_for('auth.logout') }}"><i class="bi bi-box-arrow-right"></i>Logout</a>
     </div>
   </aside>
+
+  <div class="mobile-nav-overlay d-lg-none" id="mobileMenuOverlay"></div>
+  <aside class="mobile-sidebar d-lg-none" id="mobileSidebar" aria-label="Mobile navigation">
+    <div class="mobile-sidebar-header">
+      <div class="brand">
+        <div class="brand-mark"><i class="bi bi-graph-up-arrow"></i></div>
+        <div>
+          <div class="brand-title">Career Guidance System</div>
+          <div class="brand-subtitle">AI, KNN, NLP and analytics</div>
+        </div>
+      </div>
+      <button type="button" class="mobile-close-btn" aria-label="Close navigation" data-mobile-menu-close>
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    <div class="nav flex-column nav-pills">
+      <a class="nav-link sidebar-link" href="{{ url_for('student.dashboard') }}"><i class="bi bi-speedometer2"></i>Dashboard</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('student.career_prediction') }}"><i class="bi bi-stars"></i>Career Prediction</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('student.skill_gap') }}"><i class="bi bi-diagram-3"></i>Skill Gap</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('student.resume_analyzer') }}"><i class="bi bi-file-earmark-person"></i>Resume Analyzer</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('student.mock_interview') }}"><i class="bi bi-chat-square-text"></i>Mock Interview</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('student.analytics') }}"><i class="bi bi-bar-chart"></i>Analytics</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('student.rankings') }}"><i class="bi bi-trophy"></i>Rankings</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('student.bookmarks') }}"><i class="bi bi-bookmark-heart"></i>Bookmarks</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('auth.profile') }}"><i class="bi bi-person-circle"></i>Profile Settings</a>
+      {% if current_user.role == 'admin' %}
+      <div class="mt-3 mb-2 small text-uppercase text-muted">Admin</div>
+      <a class="nav-link sidebar-link" href="{{ url_for('admin.dashboard') }}"><i class="bi bi-shield-lock"></i>Admin Dashboard</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('admin.users') }}"><i class="bi bi-people"></i>Manage Users</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('admin.questions') }}"><i class="bi bi-patch-question"></i>Interview Questions</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('admin.domains') }}"><i class="bi bi-journal-bookmark"></i>Career Domains</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('admin.datasets') }}"><i class="bi bi-database"></i>Datasets</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('admin.reports') }}"><i class="bi bi-clipboard-data"></i>Reports</a>
+      {% endif %}
+      <a class="nav-link sidebar-link" href="{{ url_for('main.about') }}"><i class="bi bi-info-circle"></i>About Project</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('main.contact') }}"><i class="bi bi-envelope"></i>Contact</a>
+      <a class="nav-link sidebar-link" href="{{ url_for('auth.logout') }}"><i class="bi bi-box-arrow-right"></i>Logout</a>
+    </div>
+  </aside>
   {% endif %}
 
   <main class="main-content">
     <div class="topbar mb-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
+      {% if current_user.is_authenticated %}
+      <button class="mobile-menu-toggle d-lg-none" type="button" aria-label="Open navigation" aria-controls="mobileSidebar" aria-expanded="false">
+        <i class="bi bi-list"></i>
+      </button>
+      {% endif %}
       <div>
         <div class="small text-uppercase text-muted">AI-Based Career Guidance and Placement System</div>
         <h5 class="mb-0">{% block page_title %}Dashboard{% endblock %}</h5>
