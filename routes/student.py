@@ -10,8 +10,9 @@ from flask_login import current_user, login_required
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 
-from models.db_models import CareerBookmark, CareerPrediction, InterviewQuestion, InterviewResult, Resume, SkillGapAnalysis, StudentSkill, UserActivity, User
+from models.db_models import CareerBookmark, CareerPrediction, InterviewQuestion, InterviewResult, Resume, SkillAssessmentResult, SkillGapAnalysis, StudentSkill, UserActivity, User
 from utils.catalog import CAREER_DOMAINS, INTERVIEW_QUESTION_BANK, SKILL_OPTIONS
+from utils.assessment_questions import SKILL_ASSESSMENT_QUESTIONS
 from utils.db import db
 from utils.helpers import allowed_file, json_dumps, json_loads, parse_skill_selection, percent, safe_filename
 from utils.insights import build_user_rankings
@@ -197,6 +198,85 @@ def skill_gap():
         latest_analysis=latest_analysis,
         target_domain=target_domain,
     )
+
+
+@student_bp.route("/skill-assessment", methods=["GET", "POST"])
+@login_required
+def skill_assessment():
+    skill_key = request.values.get("skill", "")
+    skill = next((item for item in SKILL_OPTIONS if item["key"] == skill_key), None)
+    result = None
+
+    if request.method == "POST":
+        if not skill or skill_key not in SKILL_ASSESSMENT_QUESTIONS:
+            flash("Choose a valid skill to assess.", "warning")
+            return redirect(url_for("student.skill_assessment"))
+
+        questions = SKILL_ASSESSMENT_QUESTIONS[skill_key]
+        review = []
+        correct_answers = 0
+        for index, question in enumerate(questions):
+            selected = request.form.get(f"question_{index}", "")
+            is_correct = selected == question["answer"]
+            correct_answers += int(is_correct)
+            selected_label = selected if selected in question["options"] else "Not answered"
+            review.append({
+                "question": question["question"],
+                "selected": selected_label,
+                "correct_answer": question["answer"],
+                "is_correct": is_correct,
+                "explanation": question["explanation"],
+            })
+
+        score = round((correct_answers / len(questions)) * 100, 2)
+        level = "Advanced" if score >= 80 else "Intermediate" if score >= 50 else "Beginner"
+        result = {
+            "score": score,
+            "level": level,
+            "correct_answers": correct_answers,
+            "total_questions": len(questions),
+            "review": review,
+        }
+        db.session.add(SkillAssessmentResult(
+            user_id=current_user.id,
+            skill_key=skill_key,
+            skill_name=skill["label"],
+            score=score,
+            level=level,
+            correct_answers=correct_answers,
+            total_questions=len(questions),
+            responses_json=json_dumps(review),
+        ))
+        db.session.add(UserActivity(
+            user_id=current_user.id,
+            activity_type="skill_assessment",
+            title=f"{skill['label']} assessment completed",
+            detail=f"{level} level, {score}% score",
+            score=score,
+        ))
+        db.session.commit()
+        flash("Skill assessment completed.", "success")
+
+    questions = SKILL_ASSESSMENT_QUESTIONS.get(skill_key, []) if skill else []
+    assessment_history = SkillAssessmentResult.query.filter_by(user_id=current_user.id).order_by(SkillAssessmentResult.created_at.desc()).limit(8).all()
+    return render_template(
+        "student/skill_assessment.html",
+        skills=SKILL_OPTIONS,
+        selected_skill=skill_key,
+        skill=skill,
+        questions=questions,
+        result=result,
+        assessment_history=assessment_history,
+    )
+
+
+@student_bp.route("/skill-assessment/history/clear", methods=["POST"])
+@login_required
+def clear_skill_assessment_history():
+    SkillAssessmentResult.query.filter_by(user_id=current_user.id).delete(synchronize_session=False)
+    db.session.commit()
+    flash("Skill assessment history cleared.", "success")
+    return redirect(url_for("student.skill_assessment"))
 
 
 @student_bp.route("/resume-analyzer", methods=["GET", "POST"])

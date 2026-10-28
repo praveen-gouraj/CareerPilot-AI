@@ -50,6 +50,13 @@ def seed_reference_data(app):
                     roadmap_json=json_dumps(payload["roadmap"]),
                 )
             )
+        else:
+            required_skills = json.loads(existing_domain.required_skills_json or "[]")
+            removed_skills = {"communication", "aptitude", "problem_solving"}
+            if removed_skills.intersection(required_skills):
+                required_skills = [skill for skill in required_skills if skill not in removed_skills]
+                required_skills.extend(skill for skill in payload["required_skills"] if skill not in required_skills)
+                existing_domain.required_skills_json = json_dumps(required_skills)
 
     if InterviewQuestion.query.count() == 0:
         for category, questions in INTERVIEW_QUESTION_BANK.items():

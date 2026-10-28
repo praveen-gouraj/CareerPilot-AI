@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}Skill Assessment{% endblock %}
+{% block page_title %}Skill Assessment{% endblock %}
+{% block content %}
+<div class="container-fluid px-0">
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="glass-card mb-4">
+        <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+          <div>
+            <h4 class="fw-bold mb-1">Check your skill level</h4>
+            <p class="text-muted mb-0">Answer a short knowledge quiz to get an estimated proficiency level.</p>
+          </div>
+          <span class="badge badge-soft">{{ questions|length if questions else 10 }} questions</span>
+        </div>
+        <form method="get" class="row g-2 align-items-end">
+          <div class="col-md-8">
+            <label for="skillPicker" class="form-label">Choose a skill</label>
+            <select id="skillPicker" name="skill" class="form-select" required>
+              <option value="" disabled {% if not selected_skill %}selected{% endif %}>Select a skill</option>
+              {% for item in skills %}
+              <option value="{{ item.key }}" {% if item.key == selected_skill %}selected{% endif %}>{{ item.label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-md-4"><button class="btn btn-outline-soft w-100">Load assessment</button></div>
+        </form>
+      </div>
+
+      {% if result %}
+      <div class="glass-card mb-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+          <div>
+            <div class="small text-muted">{{ skill.label }} result</div>
+            <h3 class="fw-bold mb-1">{{ result.level }} level</h3>
+            <div class="text-muted">{{ result.correct_answers }} of {{ result.total_questions }} answers correct</div>
+          </div>
+          <div class="display-5 fw-bold">{{ result.score|int }}%</div>
+        </div>
+        <div class="progress mt-3" role="progressbar" aria-label="Assessment score" aria-valuenow="{{ result.score }}" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar" style="width: {{ result.score }}%"></div>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if questions %}
+      <form method="post" class="glass-card">
+        <input type="hidden" name="skill" value="{{ selected_skill }}">
+        {% for question in questions %}
+        {% set question_index = loop.index0 %}
+        <fieldset class="mb-4">
+          <legend class="fs-6 fw-semibold">{{ loop.index }}. {{ question.question }}</legend>
+          <div class="row g-2">
+            {% for option in question.options %}
+            <div class="col-md-6">
+              <label class="widget-card d-flex align-items-start gap-2 h-100" style="cursor:pointer;">
+                <input class="form-check-input mt-1" type="radio" name="question_{{ question_index }}" value="{{ option }}" required>
+                <span>{{ option }}</span>
+              </label>
+            </div>
+            {% endfor %}
+          </div>
+        </fieldset>
+        {% endfor %}
+        <button class="btn btn-primary-gradient">Submit assessment</button>
+      </form>
+      {% elif not result %}
+      <div class="glass-card text-center text-muted py-5">Select one of the listed skills to begin its assessment.</div>
+      {% endif %}
+
+      {% if result %}
+      <div class="glass-card mt-4">
+        <h5 class="fw-bold mb-3">Answer review</h5>
+        {% for item in result.review %}
+        <div class="timeline-item">
+          <div class="d-flex justify-content-between gap-3">
+            <span class="fw-semibold">{{ loop.index }}. {{ item.question }}</span>
+            <span class="badge {% if item.is_correct %}badge-success-soft{% else %}badge-danger-soft{% endif %}">{% if item.is_correct %}Correct{% else %}Review{% endif %}</span>
+          </div>
+          {% if not item.is_correct %}<div class="small text-muted mt-1">Your answer: {{ item.selected }} · Correct answer: {{ item.correct_answer }}</div>{% endif %}
+          <div class="small text-muted mt-1">{{ item.explanation }}</div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="col-lg-4">
+      <div class="glass-card">
+        <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+          <h5 class="fw-bold mb-0">Assessment history</h5>
+          {% if assessment_history %}
+          <form method="post" action="{{ url_for('student.clear_skill_assessment_history') }}" onsubmit="return confirm('Clear your entire skill assessment history? This cannot be undone.');">
+            <button type="submit" class="btn btn-outline-soft btn-sm">Clear history</button>
+          </form>
+          {% endif %}
+        </div>
+        {% for item in assessment_history %}
+        <div class="timeline-item d-flex justify-content-between gap-3">
+          <div>
+            <div class="fw-semibold">{{ item.skill_name }}</div>
+            <div class="small text-muted">{{ item.created_at.strftime('%b %d, %Y') }}</div>
+          </div>
+          <div class="text-end">
+            <div class="fw-semibold">{{ item.score|int }}%</div>
+            <div class="small text-muted">{{ item.level }}</div>
+          </div>
+        </div>
+        {% else %}
+        <p class="text-muted mb-0">Completed assessments will appear here.</p>
+        {% endfor %}
+      </div>
+      <div class="small text-muted mt-3">This short quiz is an estimate based on multiple-choice answers. Practical projects and experience provide a fuller picture of skill.</div>
+    </div>
+  </div>
+</div>
+{% endblock %}

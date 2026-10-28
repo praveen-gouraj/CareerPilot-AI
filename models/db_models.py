@@ -101,6 +101,20 @@ class SkillGapAnalysis(TimestampMixin, db.Model):
     analysis_json = db.Column(db.Text)
 
 
+class SkillAssessmentResult(TimestampMixin, db.Model):
+    __tablename__ = "skill_assessment_results"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    skill_key = db.Column(db.String(80), nullable=False)
+    skill_name = db.Column(db.String(120), nullable=False)
+    score = db.Column(db.Float, default=0)
+    level = db.Column(db.String(30), nullable=False)
+    correct_answers = db.Column(db.Integer, default=0)
+    total_questions = db.Column(db.Integer, default=0)
+    responses_json = db.Column(db.Text)
+
+
 class Admin(TimestampMixin, db.Model):
     __tablename__ = "admin"
 

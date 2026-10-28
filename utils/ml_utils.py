@@ -24,8 +24,9 @@ class CareerModelBundle:
         self.classes = classes
 
 
-def _vector_from_skills(selected_skills: List[str]) -> np.ndarray:
-    vector = [1 if feature in selected_skills else 0 for feature in FEATURE_COLUMNS]
+def _vector_from_skills(selected_skills: List[str], feature_columns: List[str] = None) -> np.ndarray:
+    feature_columns = feature_columns or FEATURE_COLUMNS
+    vector = [1 if feature in selected_skills else 0 for feature in feature_columns]
     return np.array(vector, dtype=float).reshape(1, -1)
 
 
@@ -58,12 +59,14 @@ def load_career_model() -> CareerModelBundle:
         return train_career_model()
     with open(MODEL_FILE, "rb") as model_file:
         bundle = pickle.load(model_file)
+    if bundle.feature_columns != FEATURE_COLUMNS:
+        return train_career_model()
     return bundle
 
 
 def predict_careers(selected_skills: List[str]) -> Dict:
     bundle = load_career_model()
-    raw_vector = _vector_from_skills(selected_skills)
+    raw_vector = _vector_from_skills(selected_skills, bundle.feature_columns)
     scaled_vector = bundle.scaler.transform(raw_vector)
     probabilities = bundle.model.predict_proba(scaled_vector)[0]
     classes = bundle.model.classes_

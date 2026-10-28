@@ -81,6 +81,21 @@ CREATE TABLE IF NOT EXISTS skill_gap_analysis (
     FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
+CREATE TABLE IF NOT EXISTS skill_assessment_results (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    skill_key VARCHAR(80) NOT NULL,
+    skill_name VARCHAR(120) NOT NULL,
+    score FLOAT DEFAULT 0,
+    level VARCHAR(30) NOT NULL,
+    correct_answers INTEGER DEFAULT 0,
+    total_questions INTEGER DEFAULT 0,
+    responses_json TEXT,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+);
+
 CREATE TABLE IF NOT EXISTS admin (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name VARCHAR(120) NOT NULL,
